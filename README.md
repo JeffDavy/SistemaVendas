@@ -1,1 +1,1 @@
-# SistemaVendas
+Sistema de registro de vendas.
