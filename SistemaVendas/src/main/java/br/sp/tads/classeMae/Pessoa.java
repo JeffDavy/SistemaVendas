@@ -1,12 +1,10 @@
 package br.sp.tads.classeMae;
 
-import br.sp.tads.interfaces.IPessoa;
-
 /**
  *
  * @author Jeferson Davi
  */
-public abstract class Pessoa implements IPessoa {
+public abstract class Pessoa {
     
     protected String nome;
     protected String email;
@@ -30,9 +28,5 @@ public abstract class Pessoa implements IPessoa {
 
     public Pessoa() {
     }
-    
-    
-    
-    
     
 }

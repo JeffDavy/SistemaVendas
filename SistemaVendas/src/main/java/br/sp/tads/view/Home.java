@@ -100,11 +100,14 @@ public class Home extends javax.swing.JFrame {
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/vendedor.png"))); // NOI18N
         pnl_vendedor.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
 
-        pnl_lateral.add(pnl_vendedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 190, 50));
+        pnl_lateral.add(pnl_vendedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 190, 60));
 
         pnl_cliente.setBackground(new java.awt.Color(0, 95, 72));
         pnl_cliente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         pnl_cliente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pnl_clienteMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 pnl_clienteMouseEntered(evt);
             }
@@ -123,11 +126,14 @@ public class Home extends javax.swing.JFrame {
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/cliente.png"))); // NOI18N
         pnl_cliente.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
 
-        pnl_lateral.add(pnl_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 250, 190, 50));
+        pnl_lateral.add(pnl_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 250, 190, 60));
 
         pnl_relatorio.setBackground(new java.awt.Color(0, 95, 72));
         pnl_relatorio.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         pnl_relatorio.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pnl_relatorioMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 pnl_relatorioMouseEntered(evt);
             }
@@ -146,11 +152,14 @@ public class Home extends javax.swing.JFrame {
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/relatorio.png"))); // NOI18N
         pnl_relatorio.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
 
-        pnl_lateral.add(pnl_relatorio, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 430, 190, 50));
+        pnl_lateral.add(pnl_relatorio, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 430, 190, 60));
 
         pnl_produto.setBackground(new java.awt.Color(0, 95, 72));
         pnl_produto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         pnl_produto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pnl_produtoMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 pnl_produtoMouseEntered(evt);
             }
@@ -169,7 +178,7 @@ public class Home extends javax.swing.JFrame {
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/produto.png"))); // NOI18N
         pnl_produto.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
 
-        pnl_lateral.add(pnl_produto, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 340, 190, 50));
+        pnl_lateral.add(pnl_produto, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 340, 190, 60));
 
         btn_logoff.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/logout.png"))); // NOI18N
         btn_logoff.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -209,6 +218,9 @@ public class Home extends javax.swing.JFrame {
         btn_sair.setBackground(new java.awt.Color(0, 95, 72));
         btn_sair.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btn_sair.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_sairMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btn_sairMouseEntered(evt);
             }
@@ -277,15 +289,40 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_lbl_minimizarMouseClicked
 
     private void lbl_fecharMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_fecharMouseClicked
-        System.exit(0);
+        LoginView home = new LoginView();
+        home.show();
+        this.dispose();        
     }//GEN-LAST:event_lbl_fecharMouseClicked
 
     private void pnl_vendedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_vendedorMouseClicked
-        /** ACESSAR ÁREA VENDEDOR */
-        VendedorView tela = new VendedorView();
+        VendedorArea tela = new VendedorArea();
         tela.show();
         this.dispose();
     }//GEN-LAST:event_pnl_vendedorMouseClicked
+
+    private void pnl_clienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_clienteMouseClicked
+        ClienteArea home = new ClienteArea();
+        home.show();
+        this.dispose();
+    }//GEN-LAST:event_pnl_clienteMouseClicked
+
+    private void pnl_produtoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_produtoMouseClicked
+        ProdutoArea home = new ProdutoArea();
+        home.show();
+        this.dispose();
+    }//GEN-LAST:event_pnl_produtoMouseClicked
+
+    private void pnl_relatorioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_relatorioMouseClicked
+        RelatorioArea home = new RelatorioArea();
+        home.show();
+        this.dispose();
+    }//GEN-LAST:event_pnl_relatorioMouseClicked
+
+    private void btn_sairMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_sairMouseClicked
+        LoginView home = new LoginView();
+        home.show();
+        this.dispose();
+    }//GEN-LAST:event_btn_sairMouseClicked
 
     /**
      * @param args the command line arguments

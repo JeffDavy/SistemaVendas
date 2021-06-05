@@ -1,6 +1,7 @@
-package br.sp.tads.model;
+package br.sp.tads.dao;
 
-import br.sp.tads.classeMae.Pessoa;
+import br.sp.senac.tads.model.Vendedor;
+import br.sp.tads.interfaces.IPessoa;
 import br.sp.tads.util.Conexao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
  *
  * @author Jeferson Davi
  */
-public class Vendedor  extends Pessoa {
+public class VendedorDAO  implements IPessoa {
     
     Connection conexao;
 
@@ -26,7 +27,7 @@ public class Vendedor  extends Pessoa {
      */
 
     /**
-     * CADASTRO DE CLIENTE
+     * CADASTRO DE VENDEDOR
      * @param vendedorBean
      * @return boolean
      */
@@ -73,7 +74,7 @@ public class Vendedor  extends Pessoa {
     
     
     /**
-     * EDIÇÃO DE CLIENTE
+     * EDIÇÃO DE VENDEDOR
      * @param vendedorBean
      * @return boolean
      */
@@ -133,12 +134,12 @@ public class Vendedor  extends Pessoa {
             Class.forName(DRIVER);
             conexao = Conexao.abrirConexao();
 
-            String sql = "update Vendedores set estadoAtual = ? where cpf = ?";
+            String sql = "update Vendedores set estadoAtual = ? where codVendedor = ?";
 
             PreparedStatement instrucaoSQL = conexao.prepareStatement(sql);
 
             instrucaoSQL.setString(1, vendedorBean.getEstadoAtual());
-            instrucaoSQL.setString(2, vendedorBean.getCpf());
+            instrucaoSQL.setInt(2, vendedorBean.getCodVendedor());
 
             int linhasAfetadas = instrucaoSQL.executeUpdate();
 
@@ -159,7 +160,7 @@ public class Vendedor  extends Pessoa {
     }
     
     
-    /** CONSULTAR 1 CLIENTE
+    /** CONSULTAR 1 VENDEDOR
      * @param vendedorBean
      * @return ArrayList
      */
@@ -175,11 +176,11 @@ public class Vendedor  extends Pessoa {
             Class.forName(DRIVER);
             conexao = Conexao.abrirConexao();
 
-            String sql = "select * from Vendedores where cpf = ?";
+            String sql = "select * from Vendedores where codVendedor = ?";
             
             instrucaoSQL = conexao.prepareStatement(sql);
 
-            instrucaoSQL.setString(1, vendedorBean.getCpf());
+            instrucaoSQL.setInt(1, vendedorBean.getCodVendedor());
             
             rs = instrucaoSQL.executeQuery();
             
@@ -213,7 +214,7 @@ public class Vendedor  extends Pessoa {
     }
     
     
-    /** LISTAR TODOS OS CLIENTES
+    /** LISTAR TODOS OS VENDEDORES
      * @param vendedorBean
      * @return ArrayList
      */
@@ -265,13 +266,66 @@ public class Vendedor  extends Pessoa {
         
     }
     
+    /** LISTAR TODOS OS VENDEDORES
+     * @param vendedorBean
+     * @return ArrayList
+     */
+    public ArrayList<Vendedor> listarNome(Vendedor vendedorBean) {
+
+        ResultSet rs = null;
+        PreparedStatement instrucaoSQL = null;
+        
+        ArrayList<Vendedor> listaVendedor = new ArrayList<Vendedor>();
+        
+        try {
+            
+            Class.forName(DRIVER);
+            conexao = Conexao.abrirConexao();
+
+            String sql = "select * from Vendedores where nome like ? and estadoAtual = ?";
+                       
+            instrucaoSQL = conexao.prepareStatement(sql);
+            
+            instrucaoSQL.setString(1, vendedorBean.getNome() + "%");
+            instrucaoSQL.setString(2, vendedorBean.getEstadoAtual());
+           
+            rs = instrucaoSQL.executeQuery();
+            
+            while (rs.next()) {
+                
+                Vendedor vendedor = new Vendedor();
+                
+                vendedor.setCodVendedor(rs.getInt("codVendedor"));
+                vendedor.setNome(rs.getString("nome"));
+                vendedor.setCpf(rs.getString("cpf"));
+                vendedor.setDataNascimento(rs.getString("dataNascimento"));
+                vendedor.setEmail(rs.getString("email"));
+                vendedor.setContato1(rs.getString("contato1"));
+                vendedor.setContato2(rs.getString("contato2"));
+                vendedor.setUsuario(rs.getString("usuario"));
+                vendedor.setSenha(rs.getString("senha"));
+                vendedor.setTipo(rs.getString("tipo"));
+                vendedor.setEstadoAtual(rs.getString("estadoAtual"));
+                vendedor.setComissao(rs.getDouble("comissao"));
+                
+                listaVendedor.add(vendedor);
+                
+            }
+            
+        } catch (Exception e) {
+        }
+        
+        return listaVendedor;
+        
+    }
+   
     
     /** PEGAR CÓDIGO DO VENDEDOR
-     * @param cod
+     * @param cpf
      * @return int
      */
     @Override
-    public int pegarId(int cod) {
+    public int pegarId(int cpf) {
         
         ResultSet rs = null;
         PreparedStatement instrucaoSQL = null;
@@ -287,7 +341,7 @@ public class Vendedor  extends Pessoa {
             
             instrucaoSQL = conexao.prepareStatement(sql);
 
-            instrucaoSQL.setInt(1, cod);
+            instrucaoSQL.setInt(1, cpf);
             
             rs = instrucaoSQL.executeQuery();
             
@@ -308,113 +362,7 @@ public class Vendedor  extends Pessoa {
     
     /** GETTERS E SETTERS */
     
-    public Vendedor(String nome, String email, String contato1, String contato2, String usuario, String senha, String tipo, String estadoAtual) {
-        super(nome, email, contato1, contato2, usuario, senha, tipo, estadoAtual);
-    }
-
-    public Vendedor() {
-    }
-
-    private int codVendedor;
-    private String cpf;
-    private String dataNascimento;
-    private double comissao;
-
-    public int getCodVendedor() {
-        return codVendedor;
-    }
-
-    public void setCodVendedor(int codVendedor) {
-        this.codVendedor = codVendedor;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
-    public String getDataNascimento() {
-        return dataNascimento;
-    }
-
-    public void setDataNascimento(String dataNascimento) {
-        this.dataNascimento = dataNascimento;
-    }
-
-    public double getComissao() {
-        return comissao;
-    }
-
-    public void setComissao(double comissao) {
-        this.comissao = comissao;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getContato1() {
-        return contato1;
-    }
-
-    public void setContato1(String contato1) {
-        this.contato1 = contato1;
-    }
-
-    public String getContato2() {
-        return contato2;
-    }
-
-    public void setContato2(String contato2) {
-        this.contato2 = contato2;
-    }
-
-    public String getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
-
-    public String getEstadoAtual() {
-        return estadoAtual;
-    }
-
-    public void setEstadoAtual(String estadoAtual) {
-        this.estadoAtual = estadoAtual;
-    }
+    
 
     
 

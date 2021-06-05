@@ -1,6 +1,7 @@
-package br.sp.tads.model;
+package br.sp.tads.dao;
 
-import br.sp.tads.classeMae.Pessoa;
+import br.sp.senac.tads.model.Cliente;
+import br.sp.tads.interfaces.IPessoa;
 import br.sp.tads.util.Conexao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
  *
  * @author Jeferson Davi
  */
-public class Cliente extends Pessoa {
+public class ClienteDAO implements IPessoa {
 
     Connection conexao;
 
@@ -20,11 +21,6 @@ public class Cliente extends Pessoa {
      */
     private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
 
-    
-    /**
-     * MÉTODOS COM ACESSO AO BANCO DE DADOS
-     */
-    
     
     /**
      * CADASTRO DE CLIENTE
@@ -70,6 +66,7 @@ public class Cliente extends Pessoa {
             }
 
         } catch (Exception e) {
+            System.out.println("Erro");
 
         }
 
@@ -144,12 +141,12 @@ public class Cliente extends Pessoa {
             Class.forName(DRIVER);
             conexao = Conexao.abrirConexao();
 
-            String sql = "update Clientes set estadoAtual = ? where cnpj = ?";
+            String sql = "update Clientes set estadoAtual = ? where codCliente = ?";
 
             PreparedStatement instrucaoSQL = conexao.prepareStatement(sql);
 
             instrucaoSQL.setString(1, clienteBean.getEstadoAtual());
-            instrucaoSQL.setString(2, clienteBean.getCnpj());
+            instrucaoSQL.setInt(2, clienteBean.getCodCliente());
 
             int linhasAfetadas = instrucaoSQL.executeUpdate();
 
@@ -186,11 +183,11 @@ public class Cliente extends Pessoa {
             Class.forName(DRIVER);
             conexao = Conexao.abrirConexao();
 
-            String sql = "select * from Clientes where cnpj = ?";
+            String sql = "select * from Clientes where codCliente = ?";
             
             instrucaoSQL = conexao.prepareStatement(sql);
 
-            instrucaoSQL.setString(1, clienteBean.getCnpj());
+            instrucaoSQL.setInt(1, clienteBean.getCodCliente());
             
             rs = instrucaoSQL.executeQuery();
             
@@ -285,6 +282,64 @@ public class Cliente extends Pessoa {
         
     }
     
+    /** LISTAR TODOS OS CLIENTES POR NOME
+     * @param clienteBean
+     * @return ArrayList
+     */
+    public ArrayList<Cliente> listarNome(Cliente clienteBean) {
+
+        ResultSet rs = null;
+        PreparedStatement instrucaoSQL = null;
+        
+        ArrayList<Cliente> listaCliente = new ArrayList<Cliente>();
+        
+        try {
+            
+            Class.forName(DRIVER);
+            conexao = Conexao.abrirConexao();
+
+            String sql = "select * from Clientes where nomeFantasia LIKE ? and estadoAtual = ?";
+            
+            instrucaoSQL = conexao.prepareStatement(sql);
+            
+            instrucaoSQL.setString(1, clienteBean.getNomeFantasia() + "%");
+            instrucaoSQL.setString(2, clienteBean.getEstadoAtual());
+           
+            rs = instrucaoSQL.executeQuery();
+            
+            while (rs.next()) {
+                
+                Cliente cliente = new Cliente();
+                
+                cliente.setCodCliente(rs.getInt("codCliente"));
+                cliente.setNomeFantasia(rs.getString("nomeFantasia"));
+                cliente.setNome(rs.getString("razaoSocial"));
+                cliente.setCnpj(rs.getString("cnpj"));
+                cliente.setEmail(rs.getString("email"));
+                cliente.setContato1(rs.getString("contato1"));
+                cliente.setContato2(rs.getString("contato2"));
+                cliente.setUsuario(rs.getString("usuario"));
+                cliente.setSenha(rs.getString("senha"));
+                cliente.setTipo(rs.getString("tipo"));
+                cliente.setEstadoAtual(rs.getString("estadoAtual"));
+                cliente.setRua(rs.getString("rua"));
+                cliente.setNumero(rs.getString("numero"));
+                cliente.setBairro(rs.getString("bairro"));
+                cliente.setCidade(rs.getString("cidade"));
+                cliente.setEstado(rs.getString("estado"));
+                cliente.setComplemento(rs.getString("complemento"));
+                
+                listaCliente.add(cliente);
+                
+            }
+            
+        } catch (Exception e) {
+        }
+        
+        return listaCliente;
+        
+    }
+    
     
     /** PEGAR CÓDIGO DO CLIENTE
      * @param cod
@@ -324,164 +379,5 @@ public class Cliente extends Pessoa {
 
     }
     
-    
-    
-
-    /** GETTERS E SETTERS */
-         
-    public Cliente(String nome, String email, String contato1, String contato2, String usuario, String senha, String tipo, String estadoAtual) {
-        super(nome, email, contato1, contato2, usuario, senha, tipo, estadoAtual);
-
-    }
-    
-    public Cliente() {
-    
-    }
-
-    private int codCliente;
-    private String nomeFantasia;
-    private String cnpj;
-    private String rua;
-    private String numero;
-    private String bairro;
-    private String cidade;
-    private String estado;
-    private String complemento;
-
-    public int getCodCliente() {
-        return codCliente;
-    }
-
-    public void setCodCliente(int codCliente) {
-        this.codCliente = codCliente;
-    }
-
-    public String getNomeFantasia() {
-        return nomeFantasia;
-    }
-
-    public void setNomeFantasia(String nomeFantasia) {
-        this.nomeFantasia = nomeFantasia;
-    }
-
-    public String getCnpj() {
-        return cnpj;
-    }
-
-    public void setCnpj(String cnpj) {
-        this.cnpj = cnpj;
-    }
-
-    public String getRua() {
-        return rua;
-    }
-
-    public void setRua(String rua) {
-        this.rua = rua;
-    }
-
-    public String getNumero() {
-        return numero;
-    }
-
-    public void setNumero(String numero) {
-        this.numero = numero;
-    }
-
-    public String getBairro() {
-        return bairro;
-    }
-
-    public void setBairro(String bairro) {
-        this.bairro = bairro;
-    }
-
-    public String getCidade() {
-        return cidade;
-    }
-
-    public void setCidade(String cidade) {
-        this.cidade = cidade;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
-    public String getComplemento() {
-        return complemento;
-    }
-
-    public void setComplemento(String complemento) {
-        this.complemento = complemento;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getContato1() {
-        return contato1;
-    }
-
-    public void setContato1(String contato1) {
-        this.contato1 = contato1;
-    }
-
-    public String getContato2() {
-        return contato2;
-    }
-
-    public void setContato2(String contato2) {
-        this.contato2 = contato2;
-    }
-
-    public String getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
-
-    public String getEstadoAtual() {
-        return estadoAtual;
-    }
-
-    public void setEstadoAtual(String estadoAtual) {
-        this.estadoAtual = estadoAtual;
-    }
 
 }

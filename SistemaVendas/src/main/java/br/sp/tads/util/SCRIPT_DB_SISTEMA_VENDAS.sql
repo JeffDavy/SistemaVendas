@@ -15,16 +15,16 @@ CREATE TABLE Produtos (
 CREATE TABLE Vendedores (
   codVendedor INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
   nome VARCHAR(30) NOT NULL,
-  cpf VARCHAR(11) NOT NULL,
-  dataNascimento DATE NOT NULL,
+  cpf VARCHAR(15) NOT NULL UNIQUE,
+  dataNascimento varchar(10) NOT NULL,
   email VARCHAR(50) NOT NULL,
   contato1 VARCHAR(11) NOT NULL,
   contato2 VARCHAR(11) NULL,
-  usuario VARCHAR(15) NOT NULL,
+  usuario VARCHAR(15) NOT NULL UNIQUE,
   senha VARCHAR(15) NOT NULL,
   tipo VARCHAR(8) NOT NULL DEFAULT 'Vendedor',
   estadoAtual VARCHAR(7) NOT NULL DEFAULT 'Ativo',
-  comissao DOUBLE NOT NULL,
+  comissao DOUBLE NOT NULL DEFAULT 0,
   PRIMARY KEY(codVendedor)
 );
 
@@ -32,16 +32,16 @@ CREATE TABLE Clientes (
   codCliente INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
   nomeFantasia VARCHAR(30) NOT NULL,
   razaoSocial VARCHAR(40) NOT NULL,
-  cnpj VARCHAR(14) NOT NULL,
+  cnpj VARCHAR(19) NOT NULL UNIQUE,
   email VARCHAR(50) NOT NULL,
   contato1 VARCHAR(11) NOT NULL,
   contato2 VARCHAR(11) NULL,
-  usuario VARCHAR(15) NOT NULL,
+  usuario VARCHAR(15) NOT NULL UNIQUE,
   senha VARCHAR(15) NOT NULL,
   tipo VARCHAR(8) NOT NULL DEFAULT 'Cliente',
   estadoAtual VARCHAR(7) NOT NULL DEFAULT 'Ativo',
   rua VARCHAR(20) NOT NULL,
-  numero VARCHAR(5) NOT NULL,
+  numero VARCHAR(8) NOT NULL,
   bairro VARCHAR(20) NOT NULL,
   cidade VARCHAR(20) NOT NULL,
   estado VARCHAR(2) NOT NULL,
@@ -88,4 +88,9 @@ CREATE TABLE ItensVenda (
 
 select * from Vendedores;
 select * from Clientes;
+select * from Produtos;
+
+SELECT * FROM Clientes WHERE nomeFantasia LIKE '%f%' and estadoAtual = 'Ativo';
+
+insert into Vendedores(nome, cpf, dataNascimento, email, contato1, contato2, usuario, senha) values ('jeff', '471.998.188-03', '19981115', 'email', '1111111', '2222222', 'jeff', 'jkjknjjh');
 

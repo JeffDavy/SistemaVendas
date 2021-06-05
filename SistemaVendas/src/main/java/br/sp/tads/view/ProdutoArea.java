@@ -11,12 +11,12 @@ import javax.swing.JPanel;
  *
  * @author Administrador
  */
-public class VendedorView extends javax.swing.JFrame {
+public class ProdutoArea extends javax.swing.JFrame {
 
     /**
      * Creates new form IndexVendedor
      */
-    public VendedorView() {
+    public ProdutoArea() {
         initComponents();
     }
     
@@ -83,8 +83,19 @@ public class VendedorView extends javax.swing.JFrame {
         pnl_lateral.setBackground(new java.awt.Color(0, 95, 72));
         pnl_lateral.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        pnl_vendedor.setBackground(new java.awt.Color(40, 40, 40));
+        pnl_vendedor.setBackground(new java.awt.Color(0, 95, 72));
         pnl_vendedor.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        pnl_vendedor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pnl_vendedorMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                pnl_vendedorMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                pnl_vendedorMouseExited(evt);
+            }
+        });
         pnl_vendedor.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel5.setFont(new java.awt.Font("Berlin Sans FB", 0, 24)); // NOI18N
@@ -101,6 +112,9 @@ public class VendedorView extends javax.swing.JFrame {
         pnl_cliente.setBackground(new java.awt.Color(0, 95, 72));
         pnl_cliente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         pnl_cliente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pnl_clienteMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 pnl_clienteMouseEntered(evt);
             }
@@ -121,22 +135,14 @@ public class VendedorView extends javax.swing.JFrame {
 
         pnl_lateral.add(pnl_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 0, 210, 80));
 
-        pnl_produto.setBackground(new java.awt.Color(0, 95, 72));
+        pnl_produto.setBackground(new java.awt.Color(40, 40, 40));
         pnl_produto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        pnl_produto.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                pnl_produtoMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                pnl_produtoMouseExited(evt);
-            }
-        });
         pnl_produto.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel7.setFont(new java.awt.Font("Berlin Sans FB", 0, 24)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setText("Prodruto");
+        jLabel7.setText("Produto");
         pnl_produto.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 120, 50));
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/produto.png"))); // NOI18N
@@ -147,6 +153,9 @@ public class VendedorView extends javax.swing.JFrame {
         pnl_relatorio.setBackground(new java.awt.Color(0, 95, 72));
         pnl_relatorio.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         pnl_relatorio.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pnl_relatorioMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 pnl_relatorioMouseEntered(evt);
             }
@@ -307,6 +316,7 @@ public class VendedorView extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jTable1.setGridColor(new java.awt.Color(40, 40, 40));
         jTable1.setSelectionBackground(new java.awt.Color(0, 95, 72));
         jScrollPane1.setViewportView(jTable1);
@@ -346,14 +356,6 @@ public class VendedorView extends javax.swing.JFrame {
     private void pnl_clienteMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_clienteMouseExited
         resetColor(pnl_cliente);
     }//GEN-LAST:event_pnl_clienteMouseExited
-
-    private void pnl_produtoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_produtoMouseEntered
-        setColor(pnl_produto);
-    }//GEN-LAST:event_pnl_produtoMouseEntered
-
-    private void pnl_produtoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_produtoMouseExited
-        resetColor(pnl_produto);
-    }//GEN-LAST:event_pnl_produtoMouseExited
 
     private void pnl_relatorioMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_relatorioMouseEntered
         setColor(pnl_relatorio);
@@ -405,6 +407,32 @@ public class VendedorView extends javax.swing.JFrame {
         resetColor(btn_remover);
     }//GEN-LAST:event_btn_removerMouseExited
 
+    private void pnl_vendedorMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_vendedorMouseEntered
+        setColor(pnl_vendedor);
+    }//GEN-LAST:event_pnl_vendedorMouseEntered
+
+    private void pnl_vendedorMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_vendedorMouseExited
+        resetColor(pnl_vendedor);
+    }//GEN-LAST:event_pnl_vendedorMouseExited
+
+    private void pnl_vendedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_vendedorMouseClicked
+        VendedorArea home = new VendedorArea();
+        home.show();
+        this.dispose();
+    }//GEN-LAST:event_pnl_vendedorMouseClicked
+
+    private void pnl_clienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_clienteMouseClicked
+        ClienteArea home = new ClienteArea();
+        home.show();
+        this.dispose();
+    }//GEN-LAST:event_pnl_clienteMouseClicked
+
+    private void pnl_relatorioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_relatorioMouseClicked
+        RelatorioArea home = new RelatorioArea();
+        home.show();
+        this.dispose();
+    }//GEN-LAST:event_pnl_relatorioMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -422,14 +450,126 @@ public class VendedorView extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VendedorView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ProdutoArea.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VendedorView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ProdutoArea.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VendedorView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ProdutoArea.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VendedorView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ProdutoArea.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -450,7 +590,7 @@ public class VendedorView extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VendedorView().setVisible(true);
+                new ProdutoArea().setVisible(true);
             }
         });
     }
