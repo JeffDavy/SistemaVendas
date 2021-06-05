@@ -55,4 +55,13 @@ public class ProdutoController {
         
     }
     
+    public ArrayList<Produto> listarNomeController(Produto prodBean) {
+        
+        ArrayList<Produto> listaProduto = new ArrayList<Produto>();
+        
+        return listaProduto = produtoDAO.listarNome(prodBean);
+        
+    }
+    
+    
 }

@@ -172,7 +172,7 @@ public class Home extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Berlin Sans FB", 0, 24)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setText("Prodruto");
+        jLabel7.setText("Produto");
         pnl_produto.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, 120, 50));
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/produto.png"))); // NOI18N

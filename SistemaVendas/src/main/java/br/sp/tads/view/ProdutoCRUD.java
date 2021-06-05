@@ -5,6 +5,10 @@
  */
 package br.sp.tads.view;
 
+import br.sp.senac.tads.model.Produto;
+import br.sp.tads.controller.ProdutoController;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -13,12 +17,29 @@ import javax.swing.JPanel;
  */
 public class ProdutoCRUD extends javax.swing.JFrame {
 
+    Produto prodBean = new Produto();
+    ProdutoController prodControl = new ProdutoController();
+    
     /**
      * Creates new form IndexVendedor
      */
     public ProdutoCRUD() {
         initComponents();
     }
+    
+    public ProdutoCRUD(String operacao) {
+        initComponents();
+        lbl_operacao.setText(operacao);
+        
+    }
+    
+    public ProdutoCRUD(Produto prodBean, String operacao) {
+        initComponents();
+        lbl_operacao.setText(operacao);
+        this.prodBean = prodBean;
+        
+    }
+    
     
     /** ALTERAR A COR DO OBJETO AO PASSAR O MOUSE*/
     public void setColor(JPanel panel){
@@ -28,6 +49,55 @@ public class ProdutoCRUD extends javax.swing.JFrame {
     /** VOLTAR PARA A COR PADRÃO DO OBJETO AO TIRAR O MOUSE DE CIMA */
     public void resetColor(JPanel panel){    
         panel.setBackground(new java.awt.Color(0, 95, 72));        
+    }
+    
+    public boolean verifiaCampos() {
+        boolean vazio = false;
+
+        if (txt_nome.getText().equals("")) {
+            vazio =  true;
+        }
+        
+        if (txt_valor.getText().equals("")) {
+            vazio =  true;
+        }
+        
+        if (txt_unidade.getText().equals("")) {
+            vazio =  true;
+        }
+        
+        if (txt_descricao.getText().equals("")) {
+            vazio =  true;
+        }
+        
+        if (txt_imagem.getText().equals("")) {
+            vazio =  true;
+        }
+
+        return vazio;
+
+    }
+    
+    public void preencheCampos(Produto prodBean) {
+                       
+        ArrayList<Produto> listaProduto = prodControl.consultarController(prodBean);
+
+        int i = 0;
+
+        for (Object obj : listaProduto) {
+
+            Produto prBean = (Produto) obj;
+            
+           txt_nome.setText(prBean.getNome());
+           txt_valor.setText(Double.toString(prBean.getValor()));
+           txt_unidade.setText(prBean.getUnidade());
+           txt_descricao.setText(prBean.getDescricao());
+           txt_imagem.setText(prBean.getImagem());
+            
+           i++;
+
+        }
+                       
     }
 
     /**
@@ -251,7 +321,67 @@ public class ProdutoCRUD extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_cancelarMouseClicked
 
     private void btn_concluirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_concluirMouseClicked
-        // TODO add your handling code here:
+    
+        if (verifiaCampos()) {
+            
+            JOptionPane.showMessageDialog(null, "Preencha todos os campos", "ERRO", JOptionPane.ERROR_MESSAGE);
+            
+        } else {
+            
+            prodBean.setNome(txt_nome.getText());
+            prodBean.setValor(Double.parseDouble(txt_valor.getText()));
+            prodBean.setUnidade(txt_unidade.getText());
+            prodBean.setDescricao(txt_descricao.getText());
+            prodBean.setImagem(txt_imagem.getText());
+            
+            if (lbl_operacao.getText().equals("Adicionar Produto")) {
+                
+                boolean status = prodControl.cadastrarController(prodBean);
+                
+                if (status) {
+
+                    JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso!", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
+
+                    ProdutoArea home = new ProdutoArea();
+                    home.show();
+                    this.dispose();
+
+                } else {
+
+                    JOptionPane.showMessageDialog(null, "Produto não cadastrado", "ERRO", JOptionPane.ERROR_MESSAGE);
+
+                    ProdutoArea home = new ProdutoArea();
+                    home.show();
+                    this.dispose();
+
+                }
+                
+            } else {
+                
+                boolean status = prodControl.editarController(prodBean);
+                
+                if (status) {
+
+                    JOptionPane.showMessageDialog(null, "Produto editado com sucesso!", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
+
+                    ProdutoArea home = new ProdutoArea();
+                    home.show();
+                    this.dispose();
+
+                } else {
+
+                    JOptionPane.showMessageDialog(null, "Produto não editado", "ERRO", JOptionPane.ERROR_MESSAGE);
+
+                    ProdutoArea home = new ProdutoArea();
+                    home.show();
+                    this.dispose();
+
+                }
+                
+            }
+            
+        }
+
     }//GEN-LAST:event_btn_concluirMouseClicked
 
     private void btn_concluirMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_concluirMouseEntered

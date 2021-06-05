@@ -236,5 +236,52 @@ public class ProdutoDAO {
         
     }
     
+    /** LISTAR OS PRODUTOS POR NOME
+     * @param prodBean
+     * @return ArrayList
+     */
+    public ArrayList<Produto> listarNome(Produto prodBean) {
+
+        ResultSet rs = null;
+        PreparedStatement instrucaoSQL = null;
+        
+        ArrayList<Produto> listaProduto = new ArrayList<Produto>();
+        
+        try {
+            
+            Class.forName(DRIVER);
+            conexao = Conexao.abrirConexao();
+
+            String sql = "select * from Produtos where nome like ?";
+            
+            instrucaoSQL = conexao.prepareStatement(sql);
+
+            instrucaoSQL.setString(1, prodBean.getNome() + "%");
+            
+            rs = instrucaoSQL.executeQuery();
+            
+            while (rs.next()) {
+                
+                Produto produto = new Produto();
+                
+                produto.setCodProduto(rs.getInt("codProduto"));
+                produto.setNome(rs.getString("nome"));
+                produto.setValor(rs.getDouble("valor"));
+                produto.setUnidade(rs.getString("unidade"));
+                produto.setDescricao(rs.getString("descricao"));
+                produto.setImagem(rs.getString("imagem"));
+
+                listaProduto.add(produto);
+                
+            }
+            
+        } catch (Exception e) {
+        }
+        
+        return listaProduto;
+        
+    }
+    
+       
     
 }

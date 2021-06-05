@@ -5,19 +5,28 @@
  */
 package br.sp.tads.view;
 
+import br.sp.senac.tads.model.Produto;
+import br.sp.tads.controller.ProdutoController;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Administrador
  */
 public class ProdutoArea extends javax.swing.JFrame {
-
+    
+    Produto prodBean = new Produto();
+    ProdutoController prodControl = new ProdutoController();
+    
     /**
      * Creates new form IndexVendedor
      */
     public ProdutoArea() {
         initComponents();
+        preencheTabela();
     }
     
     /** ALTERAR A COR DO OBJETO AO PASSAR O MOUSE*/
@@ -28,6 +37,78 @@ public class ProdutoArea extends javax.swing.JFrame {
     /** VOLTAR PARA A COR PADRÃO DO OBJETO AO TIRAR O MOUSE DE CIMA */
     public void resetColor(JPanel panel){    
         panel.setBackground(new java.awt.Color(0, 95, 72));        
+    }
+    
+    public void preencheTabela() {
+        
+        ArrayList<Produto> listaProduto = prodControl.listarController();
+        
+        if (listaProduto.size() > 0) {
+            
+            DefaultTableModel tmProduto= new DefaultTableModel();
+            
+            tmProduto.addColumn("Código");
+            tmProduto.addColumn("Nome");
+            tmProduto.addColumn("Valor");
+            tmProduto.addColumn("Unidade");
+            
+            tbl_produtos.setModel(tmProduto);
+            
+            int i = 0;
+            
+            for (Object obj : listaProduto) {
+                
+                Produto prodBean = (Produto) obj;
+                
+                tmProduto.addRow(new String[1]);
+                
+                tbl_produtos.setValueAt(prodBean.getCodProduto(), i, 0);
+                tbl_produtos.setValueAt(prodBean.getNome(), i, 1);
+                tbl_produtos.setValueAt(prodBean.getValor(), i, 2);
+                tbl_produtos.setValueAt(prodBean.getUnidade(), i, 3);
+                
+                i++;
+                
+            }
+            
+        }
+        
+    }
+    
+    public void preencheTabelaNome(Produto prodBean) {
+               
+        ArrayList<Produto> listaProduto = prodControl.listarNomeController(prodBean);
+                
+        if (listaProduto.size() > 0) {
+            
+            DefaultTableModel tmProduto = new DefaultTableModel();
+            
+            tmProduto.addColumn("Código");
+            tmProduto.addColumn("Nome");
+            tmProduto.addColumn("Valor");
+            tmProduto.addColumn("Unidade");
+            
+            tbl_produtos.setModel(tmProduto);
+            
+            int i = 0;
+            
+            for (Object obj : listaProduto) {
+                
+                Produto prod = (Produto) obj;
+                
+                tmProduto.addRow(new String[1]);
+                
+                tbl_produtos.setValueAt(prod.getCodProduto(), i, 0);
+                tbl_produtos.setValueAt(prod.getNome(), i, 1);
+                tbl_produtos.setValueAt(prod.getValor(), i, 2);
+                tbl_produtos.setValueAt(prod.getUnidade(), i, 3);
+                
+                i++;
+                
+            }
+            
+        }
+        
     }
 
     /**
@@ -68,7 +149,7 @@ public class ProdutoArea extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbl_produtos = new javax.swing.JTable();
         lbl_busca = new javax.swing.JLabel();
         txt_busca = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
@@ -233,6 +314,9 @@ public class ProdutoArea extends javax.swing.JFrame {
         btn_adicionar.setBackground(new java.awt.Color(0, 95, 72));
         btn_adicionar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btn_adicionar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_adicionarMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btn_adicionarMouseEntered(evt);
             }
@@ -257,6 +341,9 @@ public class ProdutoArea extends javax.swing.JFrame {
         btn_editar.setBackground(new java.awt.Color(0, 95, 72));
         btn_editar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btn_editar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_editarMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btn_editarMouseEntered(evt);
             }
@@ -281,6 +368,9 @@ public class ProdutoArea extends javax.swing.JFrame {
         btn_remover.setBackground(new java.awt.Color(0, 95, 72));
         btn_remover.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btn_remover.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_removerMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btn_removerMouseEntered(evt);
             }
@@ -302,24 +392,35 @@ public class ProdutoArea extends javax.swing.JFrame {
 
         pnl_fundo.add(btn_remover, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 380, 100, 90));
 
-        jTable1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(40, 40, 40), 1, true));
-        jTable1.setFont(new java.awt.Font("Berlin Sans FB", 0, 14)); // NOI18N
-        jTable1.setForeground(new java.awt.Color(40, 40, 40));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbl_produtos.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(40, 40, 40), 1, true));
+        tbl_produtos.setFont(new java.awt.Font("Berlin Sans FB", 0, 14)); // NOI18N
+        tbl_produtos.setForeground(new java.awt.Color(40, 40, 40));
+        tbl_produtos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Código", "Nome", "Valor", "Unidade"
             }
-        ));
-        jTable1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jTable1.setGridColor(new java.awt.Color(40, 40, 40));
-        jTable1.setSelectionBackground(new java.awt.Color(0, 95, 72));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tbl_produtos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        tbl_produtos.setGridColor(new java.awt.Color(40, 40, 40));
+        tbl_produtos.setSelectionBackground(new java.awt.Color(0, 95, 72));
+        jScrollPane1.setViewportView(tbl_produtos);
+        if (tbl_produtos.getColumnModel().getColumnCount() > 0) {
+            tbl_produtos.getColumnModel().getColumn(0).setResizable(false);
+            tbl_produtos.getColumnModel().getColumn(1).setResizable(false);
+            tbl_produtos.getColumnModel().getColumn(2).setResizable(false);
+            tbl_produtos.getColumnModel().getColumn(3).setResizable(false);
+        }
 
         pnl_fundo.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, 660, 380));
 
@@ -329,6 +430,11 @@ public class ProdutoArea extends javax.swing.JFrame {
         txt_busca.setFont(new java.awt.Font("Berlin Sans FB", 0, 14)); // NOI18N
         txt_busca.setForeground(new java.awt.Color(51, 51, 51));
         txt_busca.setBorder(null);
+        txt_busca.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_buscaKeyTyped(evt);
+            }
+        });
         pnl_fundo.add(txt_busca, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 120, 350, -1));
 
         jSeparator1.setBackground(new java.awt.Color(40, 40, 40));
@@ -432,6 +538,86 @@ public class ProdutoArea extends javax.swing.JFrame {
         home.show();
         this.dispose();
     }//GEN-LAST:event_pnl_relatorioMouseClicked
+
+    private void btn_adicionarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_adicionarMouseClicked
+        ProdutoCRUD home = new ProdutoCRUD("Adicionar Produto");
+        home.show();
+        this.dispose();
+
+    }//GEN-LAST:event_btn_adicionarMouseClicked
+
+    private void btn_editarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_editarMouseClicked
+        int linhaSelecionada = tbl_produtos.getSelectedRow();
+        
+        if (linhaSelecionada >= 0) {
+            
+            int codProduto = Integer.parseInt(tbl_produtos.getValueAt(tbl_produtos.getSelectedRow(), 0).toString());
+                       
+            prodBean.setCodProduto(codProduto);
+            
+            ProdutoCRUD tela = new ProdutoCRUD(prodBean, "Editar Produto");
+            tela.preencheCampos(prodBean);
+            tela.show();
+            this.dispose();
+            
+            
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecione um Produto", "Erro!", JOptionPane.WARNING_MESSAGE);
+            
+        }
+        
+    }//GEN-LAST:event_btn_editarMouseClicked
+
+    private void btn_removerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_removerMouseClicked
+        
+        int linhaSelecionada = tbl_produtos.getSelectedRow();
+        
+        if (linhaSelecionada >= 0) {
+            
+            int codProduto = Integer.parseInt(tbl_produtos.getValueAt(tbl_produtos.getSelectedRow(), 0).toString());
+                       
+            prodBean.setCodProduto(codProduto);
+            
+            int result = JOptionPane.showConfirmDialog(this, "Deseja exluir o produto selecionado?", "Excluir", JOptionPane.YES_NO_OPTION);
+            
+            if (result == JOptionPane.YES_OPTION) {
+
+                if (result == JOptionPane.YES_OPTION) {
+
+                    boolean status = prodControl.removerProduto(prodBean);
+
+                    if (status) {
+
+                        JOptionPane.showMessageDialog(null, "Produto removido com sucesso!", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
+                        
+                        ProdutoArea tela = new ProdutoArea();
+                        tela.show();
+                        this.dispose();
+
+                    } else {
+
+                        JOptionPane.showMessageDialog(null, "Produto não removido", "ERRO", JOptionPane.ERROR_MESSAGE);
+
+                    }
+
+                }
+
+            }
+            
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecione um produto", "Erro!", JOptionPane.WARNING_MESSAGE);
+            
+        }
+
+    }//GEN-LAST:event_btn_removerMouseClicked
+
+    private void txt_buscaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_buscaKeyTyped
+        
+        prodBean.setNome(txt_busca.getText());
+        
+        preencheTabelaNome(prodBean);
+
+    }//GEN-LAST:event_txt_buscaKeyTyped
 
     /**
      * @param args the command line arguments
@@ -616,7 +802,6 @@ public class ProdutoArea extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lbl_busca;
     private javax.swing.JLabel lbl_fechar;
     private javax.swing.JLabel lbl_minimizar;
@@ -628,6 +813,7 @@ public class ProdutoArea extends javax.swing.JFrame {
     private javax.swing.JPanel pnl_produto;
     private javax.swing.JPanel pnl_relatorio;
     private javax.swing.JPanel pnl_vendedor;
+    private javax.swing.JTable tbl_produtos;
     private javax.swing.JTextField txt_busca;
     // End of variables declaration//GEN-END:variables
 }

@@ -8,7 +8,7 @@ CREATE TABLE Produtos (
   valor DOUBLE NOT NULL,
   unidade VARCHAR(3) NOT NULL,
   descricao VARCHAR(80) NOT NULL,
-  imagem VARCHAR(40) NOT NULL,
+  imagem VARCHAR(40) NOT NULL DEFAULT 'null.png',
   PRIMARY KEY(codProduto)
 );
 
