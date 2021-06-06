@@ -41,6 +41,7 @@ public class VendaArea extends javax.swing.JFrame {
         
     public VendaArea() {
         initComponents();
+        vendaBean.setCodCliente(1);
     }
     
     /** ALTERAR A COR DO OBJETO AO PASSAR O MOUSE*/
@@ -515,7 +516,7 @@ public class VendaArea extends javax.swing.JFrame {
     }//GEN-LAST:event_lbl_fecharMouseClicked
 
     private void btn_finalizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_finalizarMouseClicked
-        int codVendedor = 1;
+        vendedorBean.setCodVendedor(1);
         
         /** INFORMA A DATA*/
         Date data = new Date();
@@ -524,17 +525,11 @@ public class VendaArea extends javax.swing.JFrame {
         if (!lbl_cliente.getText().equals("") && itemController.retornaLista().size() > 0) {
             
             vendaBean.setCodCliente(clienteBean.getCodCliente());
-            vendaBean.setCodVendedor(codVendedor);
+            vendaBean.setCodVendedor(vendedorBean.getCodVendedor());
             vendaBean.setDataVenda(formatador.format(data));
             vendaBean.setValorVenda(valorTotal);
             vendaBean.setRazaoSocial(clienteBean.getNome());
-            
-            System.out.println(clienteBean.getCodCliente());
-            System.out.println(codVendedor);
-            System.out.println(formatador.format(data));
-            System.out.println(lbl_valor.getText());
-            System.out.println(clienteBean.getNome());
-            
+
             boolean status = vendaControl.realizarVendaController(vendaBean);
             
             if (status) {
@@ -546,6 +541,13 @@ public class VendaArea extends javax.swing.JFrame {
                 if (retorno) {
                     
                     JOptionPane.showMessageDialog(null, "Venda realizada com sucesso!", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
+                    
+                    
+                    double comissao = vendedorControl.retornoComissaoController(vendedorBean);
+                    
+                    vendedorBean.setComissao(comissao += (valorTotal * 0.05));
+                    
+                    System.out.println(vendedorControl.atualizaComissaoController(vendedorBean));
 
                     VendaArea home = new VendaArea();
                     home.show();

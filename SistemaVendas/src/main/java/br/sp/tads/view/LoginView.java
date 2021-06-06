@@ -5,6 +5,10 @@
  */
 package br.sp.tads.view;
 
+import br.sp.senac.tads.model.Vendedor;
+import br.sp.tads.controller.VendedorController;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -39,7 +43,7 @@ public class LoginView extends javax.swing.JFrame {
         btn_acessar = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        txt_senha = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -85,6 +89,9 @@ public class LoginView extends javax.swing.JFrame {
         btn_acessar.setBackground(new java.awt.Color(0, 95, 72));
         btn_acessar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btn_acessar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_acessarMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btn_acessarMouseEntered(evt);
             }
@@ -106,9 +113,9 @@ public class LoginView extends javax.swing.JFrame {
         jLabel3.setText("Usuário");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 100, -1, -1));
 
-        jPasswordField1.setFont(new java.awt.Font("Berlin Sans FB", 0, 14)); // NOI18N
-        jPasswordField1.setBorder(null);
-        jPanel1.add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 200, 250, 20));
+        txt_senha.setFont(new java.awt.Font("Berlin Sans FB", 0, 14)); // NOI18N
+        txt_senha.setBorder(null);
+        jPanel1.add(txt_senha, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 200, 250, 20));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 390, 350));
 
@@ -127,6 +134,52 @@ public class LoginView extends javax.swing.JFrame {
     private void btn_acessarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_acessarMouseExited
         resetColor(btn_acessar);
     }//GEN-LAST:event_btn_acessarMouseExited
+
+    private void btn_acessarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_acessarMouseClicked
+        
+        Vendedor vendBean = new Vendedor();
+        VendedorController vendControl = new VendedorController();
+        
+        if (!txt_usuario.getText().equals("") && !txt_senha.getText().equals("")) {
+            
+            vendBean.setUsuario(txt_usuario.getText());
+            vendBean.setSenha(txt_senha.getText());
+            
+            ArrayList<Vendedor> credenciais = vendControl.validaLoginCOntroller(vendBean);
+
+            if (credenciais.size() > 0) {
+
+                for (Object obj : credenciais) {
+
+                    Vendedor bean = (Vendedor) obj;
+                   
+                    vendBean.setCodVendedor(bean.getCodVendedor());
+                    vendBean.setNome(bean.getNome());
+
+                }
+                
+                JOptionPane.showMessageDialog(null, "Bem vindo, " + txt_usuario.getText() + "!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+
+                Home home = new Home();
+                home.show();
+                this.dispose();
+
+            } else {
+                
+                JOptionPane.showMessageDialog(null, "Erro no login", "Erro", JOptionPane.ERROR_MESSAGE);
+                
+                txt_usuario.setText("");
+                txt_senha.setText("");
+                                
+            }
+            
+        } else {
+            
+            JOptionPane.showMessageDialog(null, "Preencha os campos usuário e senha", "ERRO", JOptionPane.ERROR_MESSAGE);
+            
+        }
+
+    }//GEN-LAST:event_btn_acessarMouseClicked
     
     /** ALTERAR A COR DO OBJETO AO PASSAR O MOUSE*/
     public void setColor(JPanel panel){
@@ -182,11 +235,11 @@ public class LoginView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel lbl_fechar;
     private javax.swing.JPanel pnl_superior;
+    private javax.swing.JPasswordField txt_senha;
     private javax.swing.JTextField txt_usuario;
     // End of variables declaration//GEN-END:variables
 }

@@ -101,3 +101,9 @@ insert into Produtos (nome, valor, unidade, descricao, imagem) values ('Ameixa',
 insert into Produtos (nome, valor, unidade, descricao, imagem) values ('òleo de coco', 50.00, 'L', 'Òleo de coco', 'src\main\resources\produtos\oleo.png');
 
 insert into Vendas (Vendedores_codVendedor, Clientes_codCliente, dataVenda, valorVenda, razaoSocial) values (1, 1, '2021-06-06', 310, 'Teste');
+insert into Vendas (Vendedores_codVendedor, Clientes_codCliente, dataVenda, valorVenda, razaoSocial) values (1, 1, '2021-01-06', 1000, 'Teste');
+insert into Vendas (Vendedores_codVendedor, Clientes_codCliente, dataVenda, valorVenda, razaoSocial) values (1, 1, '2021-01-06', 2000, 'Teste');
+
+select sum(valorVenda) from Vendas where month(dataVenda) = '1' and Vendedores_codVendedor = 1;
+
+select sum(valorVenda * 0.05)  from Vendas where Vendedores_codVendedor = 1;

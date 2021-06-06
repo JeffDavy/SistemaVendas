@@ -1,11 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.sp.tads.view;
 
+import br.sp.senac.tads.model.Relatorio;
+import br.sp.tads.controller.RelatorioController;
+import java.util.ArrayList;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -18,7 +17,10 @@ public class RelatorioArea extends javax.swing.JFrame {
      */
     public RelatorioArea() {
         initComponents();
+        preencheTabela();
     }
+    
+    RelatorioController relControl = new RelatorioController();
     
     /** ALTERAR A COR DO OBJETO AO PASSAR O MOUSE*/
     public void setColor(JPanel panel){
@@ -28,6 +30,42 @@ public class RelatorioArea extends javax.swing.JFrame {
     /** VOLTAR PARA A COR PADRÃO DO OBJETO AO TIRAR O MOUSE DE CIMA */
     public void resetColor(JPanel panel){    
         panel.setBackground(new java.awt.Color(0, 95, 72));        
+    }
+    
+    public void preencheTabela() {
+        
+        ArrayList<Relatorio> listaVendas = relControl.consultaVendasController();
+        
+        if (listaVendas.size() > 0) {
+            
+            DefaultTableModel tmRelatorio= new DefaultTableModel();
+            
+            tmRelatorio.addColumn("Código");
+            tmRelatorio.addColumn("Valor Venda");
+            tmRelatorio.addColumn("Data");
+            tmRelatorio.addColumn("Cliente");
+            
+            tbl_relatorio.setModel(tmRelatorio);
+            
+            int i = 0;
+            
+            for (Object obj : listaVendas) {
+                
+                Relatorio relBean = (Relatorio) obj;
+                
+                tmRelatorio.addRow(new String[1]);
+                
+                tbl_relatorio.setValueAt(relBean.getCodVenda(), i, 0);
+                tbl_relatorio.setValueAt(relBean.getValorVenda(), i, 1);
+                tbl_relatorio.setValueAt(relBean.getDataVenda(), i, 2);
+                tbl_relatorio.setValueAt(relBean.getNomeCliente(), i, 3);
+                
+                i++;
+                
+            }
+            
+        }
+        
     }
 
     /**
@@ -60,7 +98,7 @@ public class RelatorioArea extends javax.swing.JFrame {
         btn_voltar = new javax.swing.JPanel();
         lbl_usuarioSessao1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbl_relatorio = new javax.swing.JTable();
         lbl_busca = new javax.swing.JLabel();
         txt_busca = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
@@ -231,24 +269,34 @@ public class RelatorioArea extends javax.swing.JFrame {
 
         pnl_fundo.add(btn_voltar, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 500, 90, 50));
 
-        jTable1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(40, 40, 40), 1, true));
-        jTable1.setFont(new java.awt.Font("Berlin Sans FB", 0, 14)); // NOI18N
-        jTable1.setForeground(new java.awt.Color(40, 40, 40));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbl_relatorio.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(40, 40, 40), 1, true));
+        tbl_relatorio.setFont(new java.awt.Font("Berlin Sans FB", 0, 14)); // NOI18N
+        tbl_relatorio.setForeground(new java.awt.Color(40, 40, 40));
+        tbl_relatorio.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Código da venda", "Valor venda", "Data Venda", "Cliente"
             }
-        ));
-        jTable1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jTable1.setGridColor(new java.awt.Color(40, 40, 40));
-        jTable1.setSelectionBackground(new java.awt.Color(0, 95, 72));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                true, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tbl_relatorio.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        tbl_relatorio.setGridColor(new java.awt.Color(40, 40, 40));
+        tbl_relatorio.setSelectionBackground(new java.awt.Color(0, 95, 72));
+        jScrollPane1.setViewportView(tbl_relatorio);
+        if (tbl_relatorio.getColumnModel().getColumnCount() > 0) {
+            tbl_relatorio.getColumnModel().getColumn(0).setResizable(false);
+            tbl_relatorio.getColumnModel().getColumn(1).setResizable(false);
+            tbl_relatorio.getColumnModel().getColumn(2).setResizable(false);
+        }
 
         pnl_fundo.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, 920, 320));
 
@@ -647,7 +695,6 @@ public class RelatorioArea extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lbl_busca;
     private javax.swing.JLabel lbl_fechar;
     private javax.swing.JLabel lbl_minimizar;
@@ -659,6 +706,7 @@ public class RelatorioArea extends javax.swing.JFrame {
     private javax.swing.JPanel pnl_produto;
     private javax.swing.JPanel pnl_relatorio;
     private javax.swing.JPanel pnl_vendedor;
+    private javax.swing.JTable tbl_relatorio;
     private javax.swing.JTextField txt_busca;
     // End of variables declaration//GEN-END:variables
 }

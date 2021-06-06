@@ -4,16 +4,16 @@ package br.sp.senac.tads.model;
  *
  * @author Administrador
  */
-public class Venda {
+public class Relatorio {
     
     private int codVenda;
     private int codVendedor;
     private int codCliente;
     private String dataVenda;
     private double valorVenda;
-    private String razaoSocial;
+    private String nomeCliente;
 
-    public Venda() {
+    public Relatorio() {
     }
 
     public int getCodVenda() {
@@ -56,12 +56,12 @@ public class Venda {
         this.valorVenda = valorVenda;
     }
 
-    public String getRazaoSocial() {
-        return razaoSocial;
+    public String getNomeCliente() {
+        return nomeCliente;
     }
 
-    public void setRazaoSocial(String razaoSocial) {
-        this.razaoSocial = razaoSocial;
+    public void setNomeCliente(String nomeCliente) {
+        this.nomeCliente = nomeCliente;
     }
     
     

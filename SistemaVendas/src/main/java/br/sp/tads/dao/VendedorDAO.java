@@ -358,13 +358,111 @@ public class VendedorDAO  implements IPessoa {
 
     }
     
-    
-    
-    /** GETTERS E SETTERS */
-    
-    
+    public boolean atualizaComissao(Vendedor vendBean) {
+            
+        boolean status = false;
+        
+        try {
+            
+            Class.forName(DRIVER);
+            conexao = Conexao.abrirConexao();
 
-    
+            String sql = "update Vendedores set comissao = ? where codVendedor = ?";
+                    
+            PreparedStatement instrucaoSQL = conexao.prepareStatement(sql);
 
-       
+            instrucaoSQL.setDouble(1, vendBean.getComissao());
+            instrucaoSQL.setInt(2, vendBean.getCodVendedor());
+            
+            int linhasAfetadas = instrucaoSQL.executeUpdate();
+
+            if (linhasAfetadas > 0) {
+                status = true;
+
+            } else {
+                throw new Exception();
+
+            }
+            
+        } catch (Exception e) {
+        }
+        
+        return status;
+        
+    }
+    
+    public double retornaComissao(Vendedor vendBean) {
+        
+        double comissao = 0;
+        
+        ResultSet rs = null;
+        PreparedStatement instrucaoSQL = null;
+        
+        try {
+            
+            Class.forName(DRIVER);
+            conexao = Conexao.abrirConexao();
+
+            String sql = "select comissao from Vendedores where codVendedor = ?";
+            
+            instrucaoSQL = conexao.prepareStatement(sql);
+            
+            instrucaoSQL.setInt(1, vendBean.getCodVendedor());
+            
+            rs = instrucaoSQL.executeQuery();
+            
+            while (rs.next()) {
+                
+                comissao = rs.getDouble("comissao");
+                
+            }
+            
+        } catch (Exception e) {
+        }
+        
+        return comissao;
+        
+    }
+    
+    public ArrayList<Vendedor> validaLogin(Vendedor vendBean) {
+        
+        String nome = "";
+        
+        ResultSet rs = null;
+        PreparedStatement instrucaoSQL = null;
+        
+        ArrayList<Vendedor> usuario = new ArrayList<Vendedor>();
+        
+        try {
+            
+            Class.forName(DRIVER);
+            conexao = Conexao.abrirConexao();
+
+            String sql = "select codVendedor, nome from Vendedores where usuario = ? and senha = ?";
+            
+            instrucaoSQL = conexao.prepareStatement(sql);
+            
+            instrucaoSQL.setString(1, vendBean.getUsuario());
+            instrucaoSQL.setString(2, vendBean.getSenha());
+            
+            rs = instrucaoSQL.executeQuery();
+            
+            while (rs.next()) {
+                
+                Vendedor bean = new Vendedor();
+                
+                bean.setCodVendedor(rs.getInt("codVendedor"));
+                bean.setNome(rs.getString("nome"));
+                
+                usuario.add(bean);
+                
+            }
+            
+        } catch (Exception e) {
+        }
+        
+        return usuario;
+        
+    }
+    
 }

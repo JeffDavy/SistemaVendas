@@ -1,10 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.sp.tads.view;
 
+import br.sp.senac.tads.model.Vendedor;
+import br.sp.tads.controller.VendedorController;
 import javax.swing.JPanel;
 
 /**
@@ -18,7 +15,14 @@ public class Home extends javax.swing.JFrame {
      */
     public Home() {
         initComponents();
+        vendBean.setCodVendedor(1);
+        lbl_comissao.setText(Double.toString(informaComissao(vendBean)));
+        
     }
+   
+    
+    VendedorController vendedorControl = new VendedorController();
+    Vendedor vendBean = new Vendedor();
     
     /** ALTERAR A COR DO OBJETO AO PASSAR O MOUSE*/
     public void setColor(JPanel panel){
@@ -29,7 +33,14 @@ public class Home extends javax.swing.JFrame {
     public void resetColor(JPanel panel){    
         panel.setBackground(new java.awt.Color(0, 95, 72));        
     }
-
+    
+    public double informaComissao(Vendedor vendBean) {
+        
+        return vendedorControl.retornoComissaoController(vendBean);
+        
+    }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -42,6 +53,9 @@ public class Home extends javax.swing.JFrame {
         pnl_fundo = new javax.swing.JPanel();
         pnl_lateral = new javax.swing.JPanel();
         lbl_usuarioSessao = new javax.swing.JLabel();
+        pnl_venda = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
         pnl_vendedor = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -60,7 +74,8 @@ public class Home extends javax.swing.JFrame {
         lbl_fechar = new javax.swing.JLabel();
         btn_sair = new javax.swing.JPanel();
         lbl_usuarioSessao1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
+        lbl_comissao = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -74,8 +89,34 @@ public class Home extends javax.swing.JFrame {
 
         lbl_usuarioSessao.setFont(new java.awt.Font("Berlin Sans FB", 0, 24)); // NOI18N
         lbl_usuarioSessao.setForeground(new java.awt.Color(255, 255, 255));
-        lbl_usuarioSessao.setText("Usuário");
+        lbl_usuarioSessao.setText("Bem vindo!");
         pnl_lateral.add(lbl_usuarioSessao, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 140, -1));
+
+        pnl_venda.setBackground(new java.awt.Color(0, 95, 72));
+        pnl_venda.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        pnl_venda.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pnl_vendaMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                pnl_vendaMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                pnl_vendaMouseExited(evt);
+            }
+        });
+        pnl_venda.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel9.setFont(new java.awt.Font("Berlin Sans FB", 0, 24)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel9.setText("Venda");
+        pnl_venda.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, 120, 50));
+
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/shopping-bag.png"))); // NOI18N
+        pnl_venda.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
+
+        pnl_lateral.add(pnl_venda, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 190, 60));
 
         pnl_vendedor.setBackground(new java.awt.Color(0, 95, 72));
         pnl_vendedor.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -183,6 +224,11 @@ public class Home extends javax.swing.JFrame {
 
         btn_logoff.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/logout.png"))); // NOI18N
         btn_logoff.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_logoff.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_logoffMouseClicked(evt);
+            }
+        });
         pnl_lateral.add(btn_logoff, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 10, -1, -1));
 
         pnl_fundo.add(pnl_lateral, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 190, 570));
@@ -239,13 +285,12 @@ public class Home extends javax.swing.JFrame {
 
         pnl_fundo.add(btn_sair, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 500, 90, 50));
 
-        jButton1.setText("jButton1");
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton1MouseClicked(evt);
-            }
-        });
-        pnl_fundo.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 180, -1, -1));
+        jLabel11.setFont(new java.awt.Font("Berlin Sans FB", 0, 24)); // NOI18N
+        jLabel11.setText("Valor de comissão: R$");
+        pnl_fundo.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 20, -1, -1));
+
+        lbl_comissao.setFont(new java.awt.Font("Berlin Sans FB", 0, 24)); // NOI18N
+        pnl_fundo.add(lbl_comissao, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 20, 240, 30));
 
         getContentPane().add(pnl_fundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 570));
 
@@ -333,12 +378,26 @@ public class Home extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btn_sairMouseClicked
 
-    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+    private void pnl_vendaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_vendaMouseClicked
         VendaArea home = new VendaArea();
         home.show();
         this.dispose();
+    }//GEN-LAST:event_pnl_vendaMouseClicked
 
-    }//GEN-LAST:event_jButton1MouseClicked
+    private void pnl_vendaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_vendaMouseEntered
+        setColor(pnl_venda);
+    }//GEN-LAST:event_pnl_vendaMouseEntered
+
+    private void pnl_vendaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_vendaMouseExited
+        resetColor(pnl_venda);
+    }//GEN-LAST:event_pnl_vendaMouseExited
+
+    private void btn_logoffMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_logoffMouseClicked
+        LoginView home = new LoginView();
+        home.show();
+        this.dispose();
+
+    }//GEN-LAST:event_btn_logoffMouseClicked
 
     /**
      * @param args the command line arguments
@@ -385,8 +444,9 @@ public class Home extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btn_logoff;
     private javax.swing.JPanel btn_sair;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -394,6 +454,8 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel lbl_comissao;
     private javax.swing.JLabel lbl_fechar;
     private javax.swing.JLabel lbl_minimizar;
     private javax.swing.JLabel lbl_usuarioSessao;
@@ -404,6 +466,7 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JPanel pnl_lateral;
     private javax.swing.JPanel pnl_produto;
     private javax.swing.JPanel pnl_relatorio;
+    private javax.swing.JPanel pnl_venda;
     private javax.swing.JPanel pnl_vendedor;
     // End of variables declaration//GEN-END:variables
 }

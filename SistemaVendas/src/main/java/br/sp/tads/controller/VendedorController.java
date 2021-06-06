@@ -71,4 +71,22 @@ public class VendedorController {
         
     }
     
+    public boolean atualizaComissaoController(Vendedor vendBean) {
+        
+        return vendedorDAO.atualizaComissao(vendBean);
+        
+    }
+    
+    public double retornoComissaoController(Vendedor vendBean) {
+        
+        return vendedorDAO.retornaComissao(vendBean);
+        
+    }
+    
+    public ArrayList<Vendedor> validaLoginCOntroller(Vendedor vendBean) {
+        
+        return vendedorDAO.validaLogin(vendBean);
+        
+    }
+    
 }
