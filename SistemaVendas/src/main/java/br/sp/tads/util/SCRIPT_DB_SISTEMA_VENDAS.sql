@@ -8,7 +8,7 @@ CREATE TABLE Produtos (
   valor DOUBLE NOT NULL,
   unidade VARCHAR(3) NOT NULL,
   descricao VARCHAR(80) NOT NULL,
-  imagem VARCHAR(40) NOT NULL DEFAULT 'null.png',
+  imagem VARCHAR(40) NOT NULL DEFAULT 'src\main\resources\produtos',
   PRIMARY KEY(codProduto)
 );
 
@@ -54,7 +54,7 @@ CREATE TABLE Vendas (
   Vendedores_codVendedor INTEGER UNSIGNED NOT NULL,
   Clientes_codCliente INTEGER UNSIGNED NOT NULL,
   dataVenda DATE NOT NULL,
-  valorProduto DOUBLE NOT NULL,
+  valorVenda DOUBLE NOT NULL,
   razaoSocial VARCHAR(40) NOT NULL,
   PRIMARY KEY(codVenda),
   FOREIGN KEY(Clientes_codCliente)
@@ -91,5 +91,13 @@ select * from Produtos;
 select * from ItensVenda;
 select * from Vendas;
 
+insert into Vendedores (nome, cpf, dataNascimento, email, contato1, contato2, usuario, senha) values ('Jeferson', '111.222.333-03', '15/11/1998', 'email@email.com', '1111112222', '2222221111', 'jeff', '12345');
 
+insert into Clientes (nomeFantasia, razaoSocial, cnpj, email, contato1, contato2, usuario, senha, rua, numero, bairro, cidade, estado, complemento) values ('Fantasia', 'Razão Social', '13.456.789/0001-01', 'empresa@email.com', '1111123456', '11981286341', 'cliente', '12345', 'Rua Panorama', '155', 'JD STO Eduardo', 'Embu das Artes', 'SP', 'Complemento');
 
+insert into Produtos (nome, valor, unidade, descricao, imagem) values ('Castanha', 150.00, 'KG', 'Castanha seca do Pará.', 'src\main\resources\produtos');
+insert into Produtos (nome, valor, unidade, descricao, imagem) values ('Castanha Caju', 100.00, 'KG', 'Castanha do caju rica em vitamina tal...', 'src\main\resources\produtos\caju.png');
+insert into Produtos (nome, valor, unidade, descricao, imagem) values ('Ameixa', 80.00, 'KG', 'Ameixarica em vitamina tal...', 'src\main\resources\produtos\ameixa.png');
+insert into Produtos (nome, valor, unidade, descricao, imagem) values ('òleo de coco', 50.00, 'L', 'Òleo de coco', 'src\main\resources\produtos\oleo.png');
+
+insert into Vendas (Vendedores_codVendedor, Clientes_codCliente, dataVenda, valorVenda, razaoSocial) values (1, 1, '2021-06-06', 310, 'Teste');

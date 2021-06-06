@@ -36,6 +36,24 @@ public class ItemVendaController {
         
     }
     
+    public boolean limparListaController() {
+        
+        itemDAO.limparLista();
+       
+        return true;
+        
+    }
+    
+    public boolean excluirItemCOntroller(ItemVenda item) {
+        
+        itemDAO.excluirItem(item);
+        
+        return true;
+        
+    }
+    
+    
+    
 
     
 }

@@ -3,12 +3,16 @@ package br.sp.tads.view;
 import br.sp.senac.tads.model.Cliente;
 import br.sp.senac.tads.model.ItemVenda;
 import br.sp.senac.tads.model.Produto;
+import br.sp.senac.tads.model.Venda;
 import br.sp.senac.tads.model.Vendedor;
 import br.sp.tads.controller.ClienteController;
 import br.sp.tads.controller.ItemVendaController;
 import br.sp.tads.controller.ProdutoController;
+import br.sp.tads.controller.VendaController;
 import br.sp.tads.controller.VendedorController;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
@@ -19,18 +23,21 @@ import javax.swing.table.DefaultTableModel;
  */
 public class VendaArea extends javax.swing.JFrame {
     
+    double valorTotal;
+    
     Cliente clienteBean = new Cliente();
     Produto prodBean = new Produto();
     Vendedor vendedorBean = new Vendedor();
     ItemVenda itemBean = new ItemVenda();
+    Venda vendaBean = new Venda();
     
     ClienteController clienteControl = new ClienteController();
     ProdutoController prodControl = new ProdutoController();
     VendedorController vendedorControl = new VendedorController();
     ItemVendaController itemController = new ItemVendaController();
+    VendaController vendaControl = new VendaController();
     
     ArrayList<Produto> listaProduto = new ArrayList<Produto>();
-    ArrayList<ItemVenda> listaItens = new ArrayList<ItemVenda>();
         
     public VendaArea() {
         initComponents();
@@ -46,9 +53,13 @@ public class VendaArea extends javax.swing.JFrame {
         panel.setBackground(new java.awt.Color(0, 95, 72));        
     }
     
-    public void preencheTabela(ArrayList<ItemVenda> lista) {
+    public void preencheTabela() {
+        
+        valorTotal = 0;
+        
+        ArrayList<ItemVenda> listaItens = itemController.retornaLista();
                 
-        if (listaProduto.size() > 0) {
+        if (listaItens.size() > 0) {
             
             DefaultTableModel tmProduto= new DefaultTableModel();
             
@@ -61,7 +72,7 @@ public class VendaArea extends javax.swing.JFrame {
             
             int i = 0;
             
-            for (Object obj : listaProduto) {
+            for (Object obj : listaItens) {
                 
                 ItemVenda prodBean = (ItemVenda) obj;
                 
@@ -72,12 +83,27 @@ public class VendaArea extends javax.swing.JFrame {
                 tbl_lista.setValueAt(prodBean.getValorProduto(), i, 2);
                 tbl_lista.setValueAt(prodBean.getQtdProduto(), i, 3);
                 
+                valorTotal += prodBean.getValorProduto() * prodBean.getQtdProduto();
+                
                 i++;
                 
             }
             
         }
                 
+    }
+    
+    public void limparTabela() {
+        
+        DefaultTableModel tmProduto= new DefaultTableModel();
+            
+            tmProduto.addColumn("Código");
+            tmProduto.addColumn("Nome");
+            tmProduto.addColumn("Valor");
+            tmProduto.addColumn("Quantidade");
+            
+            tbl_lista.setModel(tmProduto);
+                    
     }
 
     /**
@@ -131,6 +157,7 @@ public class VendaArea extends javax.swing.JFrame {
         jLabel23 = new javax.swing.JLabel();
         lbl_cod = new javax.swing.JLabel();
         lbl_produto = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -375,8 +402,7 @@ public class VendaArea extends javax.swing.JFrame {
         pnl_fundo.add(txt_codigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 360, 190, -1));
 
         lbl_total.setFont(new java.awt.Font("Berlin Sans FB", 0, 18)); // NOI18N
-        lbl_total.setText("R$ 0,00");
-        pnl_fundo.add(lbl_total, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 430, 140, -1));
+        pnl_fundo.add(lbl_total, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 430, 140, 20));
 
         jLabel3.setFont(new java.awt.Font("Berlin Sans FB", 0, 18)); // NOI18N
         jLabel3.setText("Valor Total:");
@@ -460,6 +486,10 @@ public class VendaArea extends javax.swing.JFrame {
         lbl_produto.setText(".");
         pnl_fundo.add(lbl_produto, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 480, 340, -1));
 
+        jLabel2.setFont(new java.awt.Font("Berlin Sans FB", 0, 18)); // NOI18N
+        jLabel2.setText("R$");
+        pnl_fundo.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 430, -1, -1));
+
         getContentPane().add(pnl_fundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 570));
 
         pack();
@@ -485,6 +515,52 @@ public class VendaArea extends javax.swing.JFrame {
     }//GEN-LAST:event_lbl_fecharMouseClicked
 
     private void btn_finalizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_finalizarMouseClicked
+        int codVendedor = 1;
+        
+        /** INFORMA A DATA*/
+        Date data = new Date();
+        SimpleDateFormat formatador = new SimpleDateFormat("yyyy-MM-dd");
+        
+        if (!lbl_cliente.getText().equals("") && itemController.retornaLista().size() > 0) {
+            
+            vendaBean.setCodCliente(clienteBean.getCodCliente());
+            vendaBean.setCodVendedor(codVendedor);
+            vendaBean.setDataVenda(formatador.format(data));
+            vendaBean.setValorVenda(valorTotal);
+            vendaBean.setRazaoSocial(clienteBean.getNome());
+            
+            System.out.println(clienteBean.getCodCliente());
+            System.out.println(codVendedor);
+            System.out.println(formatador.format(data));
+            System.out.println(lbl_valor.getText());
+            System.out.println(clienteBean.getNome());
+            
+            boolean status = vendaControl.realizarVendaController(vendaBean);
+            
+            if (status) {
+
+                    JOptionPane.showMessageDialog(null, "Venda realizada com sucesso!", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
+
+                    VendaArea home = new VendaArea();
+                    home.show();
+                    this.dispose();
+
+                } else {
+
+                    JOptionPane.showMessageDialog(null, "Venda não realziada", "ERRO", JOptionPane.ERROR_MESSAGE);
+
+                    VendaArea home = new VendaArea();
+                    home.show();
+                    this.dispose();
+
+                }
+            
+        } else {
+            
+            JOptionPane.showMessageDialog(null, "Preencha todos os campos.", "ERRO", JOptionPane.ERROR_MESSAGE);
+            
+        }
+
         
     }//GEN-LAST:event_btn_finalizarMouseClicked
 
@@ -513,6 +589,9 @@ public class VendaArea extends javax.swing.JFrame {
                     lbl_cod.setText(Integer.toString(cliBean.getCodCliente()));
                     lbl_cliente.setText(cliBean.getNome());
                     
+                    clienteBean.setCodCliente(cliBean.getCodCliente());
+                    clienteBean.setNome(cliBean.getNome());
+                    
                 }
 
             }
@@ -526,11 +605,11 @@ public class VendaArea extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_verClienteMouseClicked
 
     private void btn_verClienteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_verClienteMouseEntered
-        // TODO add your handling code here:
+        setColor(btn_verCliente);
     }//GEN-LAST:event_btn_verClienteMouseEntered
 
     private void btn_verClienteMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_verClienteMouseExited
-        // TODO add your handling code here:
+        resetColor(btn_verCliente);
     }//GEN-LAST:event_btn_verClienteMouseExited
 
     private void btn_verCodigoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_verCodigoMouseClicked
@@ -575,35 +654,85 @@ public class VendaArea extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_verCodigoMouseClicked
 
     private void btn_verCodigoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_verCodigoMouseEntered
-        // TODO add your handling code here:
+        setColor(btn_verCodigo);
     }//GEN-LAST:event_btn_verCodigoMouseEntered
 
     private void btn_verCodigoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_verCodigoMouseExited
-        // TODO add your handling code here:
+        resetColor(btn_verCodigo);
     }//GEN-LAST:event_btn_verCodigoMouseExited
 
     private void btn_removerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_removerMouseClicked
-        // TODO add your handling code here:
+
+        int linhaSelecionada = tbl_lista.getSelectedRow();
+        
+        if (linhaSelecionada >= 0) {
+            
+            String nomeItem = tbl_lista.getValueAt(tbl_lista.getSelectedRow(), 1).toString();
+            
+            int result = JOptionPane.showConfirmDialog(null, "Deseja exluir o item selecionado?", "Excluir", JOptionPane.YES_NO_OPTION);
+            
+            if (result == JOptionPane.YES_OPTION) {
+                
+                ArrayList<ItemVenda> listItem = itemController.retornaLista();
+                
+                
+                for(int i = 0; i < listItem.size(); i++) {
+                    
+                    ItemVenda ex = listItem.get(i);
+                    
+                    if (ex.getNomeProduto().equals(nomeItem)) {
+                        
+                        itemController.excluirItemCOntroller(ex);
+                        
+                        break;
+                        
+                    }
+                    
+                }
+                
+                limparTabela();
+                preencheTabela();
+
+            }
+            
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione um Item!", "Erro!", JOptionPane.WARNING_MESSAGE);
+            
+        }
+
     }//GEN-LAST:event_btn_removerMouseClicked
 
     private void btn_removerMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_removerMouseEntered
-        // TODO add your handling code here:
+        setColor(btn_remover);
     }//GEN-LAST:event_btn_removerMouseEntered
 
     private void btn_removerMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_removerMouseExited
-        // TODO add your handling code here:
+        resetColor(btn_remover);
     }//GEN-LAST:event_btn_removerMouseExited
 
     private void btn_limparListaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_limparListaMouseClicked
-        // TODO add your handling code here:
+
+        boolean status = itemController.limparListaController();
+        
+        if (status) {
+            
+            JOptionPane.showMessageDialog(null, "Lista de itens limpa", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            limparTabela();
+            
+        } else {
+            
+            JOptionPane.showMessageDialog(null, "Erro ao limpar lista", "ERRO", JOptionPane.ERROR_MESSAGE);
+            
+        }
+        
     }//GEN-LAST:event_btn_limparListaMouseClicked
 
     private void btn_limparListaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_limparListaMouseEntered
-        // TODO add your handling code here:
+        setColor(btn_limparLista);
     }//GEN-LAST:event_btn_limparListaMouseEntered
 
     private void btn_limparListaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_limparListaMouseExited
-        // TODO add your handling code here:
+        resetColor(btn_limparLista);
     }//GEN-LAST:event_btn_limparListaMouseExited
 
     private void btn_cancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_cancelarMouseClicked
@@ -613,16 +742,14 @@ public class VendaArea extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_cancelarMouseClicked
 
     private void btn_cancelarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_cancelarMouseEntered
-        // TODO add your handling code here:
+        setColor(btn_cancelar);
     }//GEN-LAST:event_btn_cancelarMouseEntered
 
     private void btn_cancelarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_cancelarMouseExited
-        // TODO add your handling code here:
+        resetColor(btn_cancelar);
     }//GEN-LAST:event_btn_cancelarMouseExited
 
     private void btn_inserirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_inserirMouseClicked
-        
-        int linhas = 0;
         
         if (txt_codigo.getText().equals("")) {
             
@@ -654,29 +781,22 @@ public class VendaArea extends javax.swing.JFrame {
                 itemVenda.setValorProduto(prod.getValor());
                 itemVenda.setQtdProduto(Integer.parseInt(txt_qtd.getText()));
                 
-                listaItens.add(itemVenda);
+                
+                                
+                itemController.addController(itemVenda);
+                
                 
                 
             }
-                        
+                    
             txt_codigo.setText("");
             txt_qtd.setText("");
             lbl_produto.setText("");
             lbl_valor.setText("");
             
+            preencheTabela();
             
-            System.out.println("------------------------------------------");
-            for (Object obj : listaItens) {
-                
-                ItemVenda prodBean = (ItemVenda) obj;
-                
-                System.out.println("Cod " + prodBean.getCodProduto());
-                System.out.println("Nome" + prodBean.getNomeProduto());
-                System.out.println("Valor" + prodBean.getValorProduto());
-                System.out.println("Qtd" + prodBean.getQtdProduto());
-                
-                
-            }
+            lbl_total.setText("" + valorTotal);
 
             
         }
@@ -684,11 +804,11 @@ public class VendaArea extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_inserirMouseClicked
 
     private void btn_inserirMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_inserirMouseEntered
-        // TODO add your handling code here:
+        setColor(btn_inserir);
     }//GEN-LAST:event_btn_inserirMouseEntered
 
     private void btn_inserirMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_inserirMouseExited
-        // TODO add your handling code here:
+        resetColor(btn_inserir);
     }//GEN-LAST:event_btn_inserirMouseExited
 
     /**
@@ -755,6 +875,7 @@ public class VendaArea extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;

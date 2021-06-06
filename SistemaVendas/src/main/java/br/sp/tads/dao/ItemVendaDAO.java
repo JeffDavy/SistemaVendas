@@ -1,7 +1,6 @@
 package br.sp.tads.dao;
 
 import br.sp.senac.tads.model.ItemVenda;
-import br.sp.senac.tads.model.Produto;
 import br.sp.tads.util.Conexao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -43,8 +42,15 @@ public class ItemVendaDAO {
         
     }
     
+    public boolean excluirItem(ItemVenda item) {
+        
+        listaItens.remove(item);
+        
+        return true;
+        
+    }
+    
     /** CONSULTAR PRODUTO VENDA
-     * @param prodBean
      * @return ArrayList
      */
     public ArrayList<ItemVenda> retornaProduto(ItemVenda itemBean) {
