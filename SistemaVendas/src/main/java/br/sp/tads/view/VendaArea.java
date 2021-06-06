@@ -649,16 +649,16 @@ public class VendaArea extends javax.swing.JFrame {
                 
                 ItemVenda itemVenda = new ItemVenda();
                 
-                itemBean.setCodProduto(prod.getCodProduto());
-                itemBean.setNomeProduto(prod.getNome());
-                itemBean.setValorProduto(prod.getValor());
-                itemBean.setQtdProduto(Integer.parseInt(txt_qtd.getText()));
+                itemVenda.setCodProduto(prod.getCodProduto());
+                itemVenda.setNomeProduto(prod.getNome());
+                itemVenda.setValorProduto(prod.getValor());
+                itemVenda.setQtdProduto(Integer.parseInt(txt_qtd.getText()));
+                
+                listaItens.add(itemVenda);
                 
                 
             }
-            
-            listaItens.add(itemBean);
-            
+                        
             txt_codigo.setText("");
             txt_qtd.setText("");
             lbl_produto.setText("");
