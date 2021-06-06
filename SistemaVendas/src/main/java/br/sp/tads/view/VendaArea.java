@@ -538,20 +538,38 @@ public class VendaArea extends javax.swing.JFrame {
             boolean status = vendaControl.realizarVendaController(vendaBean);
             
             if (status) {
-
+                
+                int codVenda = vendaControl.ultimoCodVendaController();
+                
+                boolean retorno = itemController.registrarController(itemController.retornaLista(), codVenda);
+                
+                if (retorno) {
+                    
                     JOptionPane.showMessageDialog(null, "Venda realizada com sucesso!", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
 
                     VendaArea home = new VendaArea();
                     home.show();
                     this.dispose();
-
+                    
                 } else {
-
-                    JOptionPane.showMessageDialog(null, "Venda não realziada", "ERRO", JOptionPane.ERROR_MESSAGE);
-
+                    
+                    JOptionPane.showMessageDialog(null, "Erro ao registrar os itens", "ERRO", JOptionPane.ERROR_MESSAGE);
+                    
                     VendaArea home = new VendaArea();
                     home.show();
                     this.dispose();
+                    
+                }
+                
+                
+
+            } else {
+
+                JOptionPane.showMessageDialog(null, "Venda não realziada", "ERRO", JOptionPane.ERROR_MESSAGE);
+
+                VendaArea home = new VendaArea();
+                home.show();
+                this.dispose();
 
                 }
             
@@ -593,7 +611,7 @@ public class VendaArea extends javax.swing.JFrame {
                     clienteBean.setNome(cliBean.getNome());
                     
                 }
-
+                
             }
             
         } else {

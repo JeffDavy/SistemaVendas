@@ -16,6 +16,7 @@ public class ItemVendaController {
     public ItemVendaController() {
     }
     
+    
     public void addController(ItemVenda item){
         
         itemDAO.addItem(item);
@@ -49,6 +50,20 @@ public class ItemVendaController {
         itemDAO.excluirItem(item);
         
         return true;
+        
+    }
+    
+    public boolean registrarController(ArrayList<ItemVenda> item, int codVenda) {
+        
+        boolean status = false;
+        
+        for (ItemVenda lista : item) {
+            
+            status = itemDAO.registrarItens(lista, codVenda);
+            
+        }
+
+        return status;
         
     }
     

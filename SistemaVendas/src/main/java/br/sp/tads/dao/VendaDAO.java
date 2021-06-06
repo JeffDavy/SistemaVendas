@@ -4,6 +4,7 @@ import br.sp.senac.tads.model.Venda;
 import br.sp.tads.util.Conexao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 /**
  *
@@ -53,6 +54,37 @@ public class VendaDAO {
         
         
         return status;
+        
+    }
+    
+    public int pegarId() {
+        
+        int ultimoCod = 0;
+        
+        ResultSet rs = null;
+        PreparedStatement instrucaoSQL = null;
+        
+        try {
+            
+            Class.forName(DRIVER);
+            conexao = Conexao.abrirConexao();
+
+            String sql = "select max(codVenda) from Vendas";
+            
+            instrucaoSQL = conexao.prepareStatement(sql);
+            
+            rs = instrucaoSQL.executeQuery();
+            
+            while (rs.next()) {
+                
+                ultimoCod = rs.getInt("max(codVenda)");
+                
+            }
+            
+        } catch (Exception e) {
+        }
+        
+        return ultimoCod;
         
     }
     

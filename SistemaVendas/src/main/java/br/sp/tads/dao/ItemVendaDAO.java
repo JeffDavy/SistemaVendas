@@ -22,6 +22,7 @@ public class ItemVendaDAO {
     
     static ArrayList<ItemVenda> listaItens = new ArrayList<>();
     
+    
     public ArrayList<ItemVenda> retornaItens() {
         
         return ItemVendaDAO.listaItens;
@@ -50,9 +51,6 @@ public class ItemVendaDAO {
         
     }
     
-    /** CONSULTAR PRODUTO VENDA
-     * @return ArrayList
-     */
     public ArrayList<ItemVenda> retornaProduto(ItemVenda itemBean) {
 
         ResultSet rs = null;
@@ -89,6 +87,42 @@ public class ItemVendaDAO {
         }
         
         return listaItem;
+        
+    }
+    
+    public boolean registrarItens(ItemVenda item, int codVenda) {
+        
+        boolean status = false;
+        
+        try {
+            
+            Class.forName(DRIVER);
+            conexao = Conexao.abrirConexao();
+
+            String sql = "insert into ItensVenda (Produtos_codProduto, Vendas_codVenda, quantidade, valor, nomeProduto) values (?,?,?,?,?)";
+
+            PreparedStatement instrucaoSQL = conexao.prepareStatement(sql);
+            
+            instrucaoSQL.setInt(1, item.getCodProduto());
+            instrucaoSQL.setInt(2, codVenda);
+            instrucaoSQL.setInt(3, item.getQtdProduto());
+            instrucaoSQL.setDouble(4, item.getValorProduto());
+            instrucaoSQL.setString(5, item.getNomeProduto());
+            
+            int linhasAfetadas = instrucaoSQL.executeUpdate();
+
+            if (linhasAfetadas > 0) {
+                status = true;
+
+            } else {
+                throw new Exception();
+
+            }
+            
+        } catch (Exception e) {
+        }
+        
+        return status;
         
     }
     

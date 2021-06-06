@@ -21,4 +21,10 @@ public class VendaController {
         
     }
     
+    public int ultimoCodVendaController() {
+        
+        return vendaDAO.pegarId();
+        
+    }
+    
 }
