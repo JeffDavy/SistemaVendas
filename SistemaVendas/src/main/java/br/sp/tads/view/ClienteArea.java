@@ -146,6 +146,7 @@ public class ClienteArea extends javax.swing.JFrame {
         pnl_botoesEstado = new javax.swing.JPanel();
         lbl_minimizar = new javax.swing.JLabel();
         lbl_fechar = new javax.swing.JLabel();
+        btn_home = new javax.swing.JLabel();
         btn_voltar = new javax.swing.JPanel();
         lbl_usuarioSessao1 = new javax.swing.JLabel();
         btn_adicionar = new javax.swing.JPanel();
@@ -294,6 +295,15 @@ public class ClienteArea extends javax.swing.JFrame {
         pnl_botoesEstado.add(lbl_fechar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, -1, -1));
 
         pnl_lateral.add(pnl_botoesEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 10, 80, 50));
+
+        btn_home.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/home.png"))); // NOI18N
+        btn_home.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_home.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_homeMouseClicked(evt);
+            }
+        });
+        pnl_lateral.add(btn_home, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 20, -1, -1));
 
         pnl_fundo.add(pnl_lateral, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 80));
 
@@ -624,6 +634,13 @@ public class ClienteArea extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btn_removerMouseClicked
 
+    private void btn_homeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_homeMouseClicked
+        Home home = new Home();
+        home.show();
+        this.dispose();
+
+    }//GEN-LAST:event_btn_homeMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -917,6 +934,7 @@ public class ClienteArea extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel btn_adicionar;
     private javax.swing.JPanel btn_editar;
+    private javax.swing.JLabel btn_home;
     private javax.swing.JPanel btn_remover;
     private javax.swing.JPanel btn_voltar;
     private javax.swing.JLabel jLabel1;

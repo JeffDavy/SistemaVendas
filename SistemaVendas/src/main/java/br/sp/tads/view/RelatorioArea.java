@@ -56,17 +56,9 @@ public class RelatorioArea extends javax.swing.JFrame {
         pnl_botoesEstado = new javax.swing.JPanel();
         lbl_minimizar = new javax.swing.JLabel();
         lbl_fechar = new javax.swing.JLabel();
+        btn_home = new javax.swing.JLabel();
         btn_voltar = new javax.swing.JPanel();
         lbl_usuarioSessao1 = new javax.swing.JLabel();
-        btn_adicionar = new javax.swing.JPanel();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
-        btn_editar = new javax.swing.JPanel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        btn_remover = new javax.swing.JPanel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         lbl_busca = new javax.swing.JLabel();
@@ -205,6 +197,15 @@ public class RelatorioArea extends javax.swing.JFrame {
 
         pnl_lateral.add(pnl_botoesEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 10, 80, 50));
 
+        btn_home.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/home.png"))); // NOI18N
+        btn_home.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_home.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_homeMouseClicked(evt);
+            }
+        });
+        pnl_lateral.add(btn_home, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 20, -1, -1));
+
         pnl_fundo.add(pnl_lateral, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 80));
 
         btn_voltar.setBackground(new java.awt.Color(0, 95, 72));
@@ -230,78 +231,6 @@ public class RelatorioArea extends javax.swing.JFrame {
 
         pnl_fundo.add(btn_voltar, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 500, 90, 50));
 
-        btn_adicionar.setBackground(new java.awt.Color(0, 95, 72));
-        btn_adicionar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btn_adicionar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btn_adicionarMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btn_adicionarMouseExited(evt);
-            }
-        });
-        btn_adicionar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/add-button (1).png"))); // NOI18N
-        btn_adicionar.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 40, 40));
-
-        jLabel14.setFont(new java.awt.Font("Berlin Sans FB", 0, 14)); // NOI18N
-        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel14.setText("Adicionar");
-        btn_adicionar.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 80, 20));
-
-        pnl_fundo.add(btn_adicionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 160, 100, 90));
-
-        btn_editar.setBackground(new java.awt.Color(0, 95, 72));
-        btn_editar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btn_editar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btn_editarMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btn_editarMouseExited(evt);
-            }
-        });
-        btn_editar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/edit.png"))); // NOI18N
-        btn_editar.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 40, 40));
-
-        jLabel12.setFont(new java.awt.Font("Berlin Sans FB", 0, 14)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel12.setText("Editar");
-        btn_editar.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 80, 20));
-
-        pnl_fundo.add(btn_editar, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 270, 100, 90));
-
-        btn_remover.setBackground(new java.awt.Color(0, 95, 72));
-        btn_remover.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btn_remover.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btn_removerMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btn_removerMouseExited(evt);
-            }
-        });
-        btn_remover.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/remove.png"))); // NOI18N
-        btn_remover.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 40, 40));
-
-        jLabel10.setFont(new java.awt.Font("Berlin Sans FB", 0, 14)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel10.setText("Remover");
-        btn_remover.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 80, 20));
-
-        pnl_fundo.add(btn_remover, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 380, 100, 90));
-
         jTable1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(40, 40, 40), 1, true));
         jTable1.setFont(new java.awt.Font("Berlin Sans FB", 0, 14)); // NOI18N
         jTable1.setForeground(new java.awt.Color(40, 40, 40));
@@ -321,19 +250,19 @@ public class RelatorioArea extends javax.swing.JFrame {
         jTable1.setSelectionBackground(new java.awt.Color(0, 95, 72));
         jScrollPane1.setViewportView(jTable1);
 
-        pnl_fundo.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, 660, 380));
+        pnl_fundo.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, 920, 320));
 
         lbl_busca.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/busca.png"))); // NOI18N
-        pnl_fundo.add(lbl_busca, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 120, -1, -1));
+        pnl_fundo.add(lbl_busca, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, -1, -1));
 
         txt_busca.setFont(new java.awt.Font("Berlin Sans FB", 0, 14)); // NOI18N
         txt_busca.setForeground(new java.awt.Color(51, 51, 51));
         txt_busca.setBorder(null);
-        pnl_fundo.add(txt_busca, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 120, 350, -1));
+        pnl_fundo.add(txt_busca, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 110, 350, -1));
 
         jSeparator1.setBackground(new java.awt.Color(40, 40, 40));
         jSeparator1.setForeground(new java.awt.Color(40, 40, 40));
-        pnl_fundo.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 140, 350, 10));
+        pnl_fundo.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 130, 350, 10));
 
         getContentPane().add(pnl_fundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 570));
 
@@ -375,30 +304,6 @@ public class RelatorioArea extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btn_voltarMouseClicked
 
-    private void btn_adicionarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_adicionarMouseEntered
-        setColor(btn_adicionar);
-    }//GEN-LAST:event_btn_adicionarMouseEntered
-
-    private void btn_adicionarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_adicionarMouseExited
-        resetColor(btn_adicionar);
-    }//GEN-LAST:event_btn_adicionarMouseExited
-
-    private void btn_editarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_editarMouseEntered
-        setColor(btn_editar);
-    }//GEN-LAST:event_btn_editarMouseEntered
-
-    private void btn_editarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_editarMouseExited
-        resetColor(btn_editar);
-    }//GEN-LAST:event_btn_editarMouseExited
-
-    private void btn_removerMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_removerMouseEntered
-        setColor(btn_remover);
-    }//GEN-LAST:event_btn_removerMouseEntered
-
-    private void btn_removerMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_removerMouseExited
-        resetColor(btn_remover);
-    }//GEN-LAST:event_btn_removerMouseExited
-
     private void pnl_vendedorMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_vendedorMouseEntered
         setColor(pnl_vendedor);
     }//GEN-LAST:event_pnl_vendedorMouseEntered
@@ -432,6 +337,12 @@ public class RelatorioArea extends javax.swing.JFrame {
         home.show();
         this.dispose();
     }//GEN-LAST:event_pnl_produtoMouseClicked
+
+    private void btn_homeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_homeMouseClicked
+        Home home = new Home();
+        home.show();
+        this.dispose();
+    }//GEN-LAST:event_btn_homeMouseClicked
 
     /**
      * @param args the command line arguments
@@ -724,16 +635,9 @@ public class RelatorioArea extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel btn_adicionar;
-    private javax.swing.JPanel btn_editar;
-    private javax.swing.JPanel btn_remover;
+    private javax.swing.JLabel btn_home;
     private javax.swing.JPanel btn_voltar;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -741,7 +645,6 @@ public class RelatorioArea extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTable1;

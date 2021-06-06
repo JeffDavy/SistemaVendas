@@ -60,6 +60,7 @@ public class Home extends javax.swing.JFrame {
         lbl_fechar = new javax.swing.JLabel();
         btn_sair = new javax.swing.JPanel();
         lbl_usuarioSessao1 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -238,6 +239,14 @@ public class Home extends javax.swing.JFrame {
 
         pnl_fundo.add(btn_sair, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 500, 90, 50));
 
+        jButton1.setText("jButton1");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
+        pnl_fundo.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 180, -1, -1));
+
         getContentPane().add(pnl_fundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 570));
 
         pack();
@@ -324,6 +333,13 @@ public class Home extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btn_sairMouseClicked
 
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        VendaArea home = new VendaArea();
+        home.show();
+        this.dispose();
+
+    }//GEN-LAST:event_jButton1MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -369,6 +385,7 @@ public class Home extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btn_logoff;
     private javax.swing.JPanel btn_sair;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

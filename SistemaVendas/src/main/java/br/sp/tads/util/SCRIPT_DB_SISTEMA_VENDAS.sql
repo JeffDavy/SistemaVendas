@@ -55,7 +55,7 @@ CREATE TABLE Vendas (
   Clientes_codCliente INTEGER UNSIGNED NOT NULL,
   dataVenda DATE NOT NULL,
   valorProduto DOUBLE NOT NULL,
-  razaoSocial VARCHAR(30) NOT NULL,
+  razaoSocial VARCHAR(40) NOT NULL,
   PRIMARY KEY(codVenda),
   FOREIGN KEY(Clientes_codCliente)
     REFERENCES Clientes(codCliente)
@@ -72,7 +72,7 @@ CREATE TABLE ItensVenda (
   Produtos_codProduto INTEGER UNSIGNED NOT NULL,
   Vendas_codVenda INTEGER UNSIGNED NOT NULL,
   quantidade INTEGER UNSIGNED NULL,
-  valorProduto DOUBLE NULL,
+  valor DOUBLE NULL,
   nomeProduto VARCHAR(30) NULL,
   PRIMARY KEY(codItemVenda),
   FOREIGN KEY(Vendas_codVenda)
@@ -85,12 +85,11 @@ CREATE TABLE ItensVenda (
       ON UPDATE NO ACTION
 );
 
-
 select * from Vendedores;
 select * from Clientes;
 select * from Produtos;
+select * from ItensVenda;
+select * from Vendas;
 
-SELECT * FROM Clientes WHERE nomeFantasia LIKE '%f%' and estadoAtual = 'Ativo';
 
-insert into Vendedores(nome, cpf, dataNascimento, email, contato1, contato2, usuario, senha) values ('jeff', '471.998.188-03', '19981115', 'email', '1111111', '2222222', 'jeff', 'jkjknjjh');
 

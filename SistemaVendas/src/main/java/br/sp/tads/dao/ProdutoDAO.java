@@ -191,9 +191,10 @@ public class ProdutoDAO {
         return listaProduto;
         
     }
+       
     
-    
-    /** LISTAR TODOS OS PRODUTOS
+    /** 
+     * LISTAR TODOS OS PRODUTOS
      * @return ArrayList
      */
     public ArrayList<Produto> listarProduto() {
@@ -281,6 +282,8 @@ public class ProdutoDAO {
         return listaProduto;
         
     }
+    
+    
     
        
     

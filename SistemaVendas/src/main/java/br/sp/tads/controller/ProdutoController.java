@@ -62,6 +62,6 @@ public class ProdutoController {
         return listaProduto = produtoDAO.listarNome(prodBean);
         
     }
-    
+   
     
 }

@@ -65,6 +65,14 @@ public class ClienteController {
         
     }
     
+    public ArrayList<Cliente> consultaCnpjController(Cliente clienteBean) {
+        
+        ArrayList<Cliente> listaCliente = new ArrayList<Cliente>();
+        
+        return listaCliente = clienteDAO.consultaCnpj(clienteBean);
+        
+    }
+    
     public int pegarIdController(int cod) {
         
         int codigo;

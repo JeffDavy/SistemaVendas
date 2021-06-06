@@ -224,6 +224,48 @@ public class ClienteDAO implements IPessoa {
         
     }
     
+    /** CONSULTAR 1 POR CPF
+     * @param clienteBean
+     * @return ArrayList
+     */
+    public ArrayList<Cliente> consultaCnpj(Cliente clienteBean) {
+
+        ResultSet rs = null;
+        PreparedStatement instrucaoSQL = null;
+        
+        ArrayList<Cliente> listaCliente = new ArrayList<Cliente>();
+        
+        try {
+            
+            Class.forName(DRIVER);
+            conexao = Conexao.abrirConexao();
+
+            String sql = "select codCliente, razaoSocial from Clientes where cnpj = ?";
+            
+            instrucaoSQL = conexao.prepareStatement(sql);
+
+            instrucaoSQL.setString(1, clienteBean.getCnpj());
+            
+            rs = instrucaoSQL.executeQuery();
+            
+            while (rs.next()) {
+                
+                Cliente cliente = new Cliente();
+                
+                cliente.setCodCliente(rs.getInt("codCliente"));
+                cliente.setNome(rs.getString("razaoSocial"));
+                
+                listaCliente.add(cliente);
+                
+            }
+            
+        } catch (Exception e) {
+        }
+        
+        return listaCliente;
+        
+    }
+    
     
     /** LISTAR TODOS OS CLIENTES
      * @param clienteBean
