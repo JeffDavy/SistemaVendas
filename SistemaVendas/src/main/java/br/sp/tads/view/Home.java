@@ -2,6 +2,8 @@ package br.sp.tads.view;
 
 import br.sp.senac.tads.model.Vendedor;
 import br.sp.tads.controller.VendedorController;
+import java.awt.Toolkit;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 /**
@@ -17,6 +19,7 @@ public class Home extends javax.swing.JFrame {
         initComponents();
         vendBean.setCodVendedor(1);
         lbl_comissao.setText(Double.toString(informaComissao(vendBean)));
+        setIcon(this);
         
     }
    
@@ -32,6 +35,10 @@ public class Home extends javax.swing.JFrame {
     /** VOLTAR PARA A COR PADRÃO DO OBJETO AO TIRAR O MOUSE DE CIMA */
     public void resetColor(JPanel panel){    
         panel.setBackground(new java.awt.Color(0, 95, 72));        
+    }
+    
+    public void setIcon(JFrame frm) {
+        frm.setIconImage(Toolkit.getDefaultToolkit().getImage("src/main/resources/imagens/castanha.png"));
     }
     
     public double informaComissao(Vendedor vendBean) {

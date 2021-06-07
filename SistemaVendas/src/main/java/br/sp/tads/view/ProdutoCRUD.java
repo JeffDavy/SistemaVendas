@@ -7,7 +7,9 @@ package br.sp.tads.view;
 
 import br.sp.senac.tads.model.Produto;
 import br.sp.tads.controller.ProdutoController;
+import java.awt.Toolkit;
 import java.util.ArrayList;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -37,6 +39,14 @@ public class ProdutoCRUD extends javax.swing.JFrame {
         initComponents();
         lbl_operacao.setText(operacao);
         this.prodBean = prodBean;
+        setIcon(this);
+        
+        if (operacao.equals("Produto")) {
+            
+            lbl_concluir.setText("Fechar");
+            btn_cancelar.setVisible(false);
+            desabilitarCampos();
+        }
         
     }
     
@@ -49,6 +59,10 @@ public class ProdutoCRUD extends javax.swing.JFrame {
     /** VOLTAR PARA A COR PADRÃO DO OBJETO AO TIRAR O MOUSE DE CIMA */
     public void resetColor(JPanel panel){    
         panel.setBackground(new java.awt.Color(0, 95, 72));        
+    }
+    
+    public void setIcon(JFrame frm) {
+        frm.setIconImage(Toolkit.getDefaultToolkit().getImage("src/main/resources/imagens/castanha.png"));
     }
     
     public boolean verifiaCampos() {
@@ -99,6 +113,16 @@ public class ProdutoCRUD extends javax.swing.JFrame {
         }
                        
     }
+    
+    public void desabilitarCampos() {
+
+        txt_nome.setEditable(false);
+        txt_valor.setEditable(false);
+        txt_unidade.setEditable(false);
+        txt_descricao.setEditable(false);
+        txt_imagem.setEditable(false);
+
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -118,7 +142,7 @@ public class ProdutoCRUD extends javax.swing.JFrame {
         btn_cancelar = new javax.swing.JPanel();
         lbl_usuarioSessao1 = new javax.swing.JLabel();
         btn_concluir = new javax.swing.JPanel();
-        lbl_usuarioSessao2 = new javax.swing.JLabel();
+        lbl_concluir = new javax.swing.JLabel();
         txt_nome = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel1 = new javax.swing.JLabel();
@@ -219,11 +243,11 @@ public class ProdutoCRUD extends javax.swing.JFrame {
         });
         btn_concluir.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lbl_usuarioSessao2.setFont(new java.awt.Font("Berlin Sans FB", 0, 18)); // NOI18N
-        lbl_usuarioSessao2.setForeground(new java.awt.Color(255, 255, 255));
-        lbl_usuarioSessao2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbl_usuarioSessao2.setText("Concluir");
-        btn_concluir.add(lbl_usuarioSessao2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 70, 30));
+        lbl_concluir.setFont(new java.awt.Font("Berlin Sans FB", 0, 18)); // NOI18N
+        lbl_concluir.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_concluir.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl_concluir.setText("Concluir");
+        btn_concluir.add(lbl_concluir, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 70, 30));
 
         pnl_fundo.add(btn_concluir, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 500, 90, 50));
 
@@ -356,7 +380,7 @@ public class ProdutoCRUD extends javax.swing.JFrame {
 
                 }
                 
-            } else {
+            } else if (lbl_operacao.getText().equals("Editar Produto")) {
                 
                 boolean status = prodControl.editarController(prodBean);
                 
@@ -377,6 +401,12 @@ public class ProdutoCRUD extends javax.swing.JFrame {
                     this.dispose();
 
                 }
+                
+            } else {
+    
+                ProdutoArea home = new ProdutoArea();
+                home.show();
+                this.dispose();
                 
             }
             
@@ -471,11 +501,11 @@ public class ProdutoCRUD extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator5;
+    private javax.swing.JLabel lbl_concluir;
     private javax.swing.JLabel lbl_fechar;
     private javax.swing.JLabel lbl_minimizar;
     private javax.swing.JLabel lbl_operacao;
     private javax.swing.JLabel lbl_usuarioSessao1;
-    private javax.swing.JLabel lbl_usuarioSessao2;
     private javax.swing.JPanel pnl_botoesEstado;
     private javax.swing.JPanel pnl_fundo;
     private javax.swing.JPanel pnl_lateral;

@@ -7,7 +7,9 @@ package br.sp.tads.view;
 
 import br.sp.senac.tads.model.Produto;
 import br.sp.tads.controller.ProdutoController;
+import java.awt.Toolkit;
 import java.util.ArrayList;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
@@ -27,6 +29,7 @@ public class ProdutoArea extends javax.swing.JFrame {
     public ProdutoArea() {
         initComponents();
         preencheTabela();
+        setIcon(this);
     }
     
     /** ALTERAR A COR DO OBJETO AO PASSAR O MOUSE*/
@@ -37,6 +40,10 @@ public class ProdutoArea extends javax.swing.JFrame {
     /** VOLTAR PARA A COR PADRÃO DO OBJETO AO TIRAR O MOUSE DE CIMA */
     public void resetColor(JPanel panel){    
         panel.setBackground(new java.awt.Color(0, 95, 72));        
+    }
+    
+    public void setIcon(JFrame frm) {
+        frm.setIconImage(Toolkit.getDefaultToolkit().getImage("src/main/resources/imagens/castanha.png"));
     }
     
     public void preencheTabela() {
@@ -154,6 +161,7 @@ public class ProdutoArea extends javax.swing.JFrame {
         lbl_busca = new javax.swing.JLabel();
         txt_busca = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
+        btn_view = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -451,6 +459,15 @@ public class ProdutoArea extends javax.swing.JFrame {
         jSeparator1.setForeground(new java.awt.Color(40, 40, 40));
         pnl_fundo.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 140, 350, 10));
 
+        btn_view.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/view-details.png"))); // NOI18N
+        btn_view.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_view.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_viewMouseClicked(evt);
+            }
+        });
+        pnl_fundo.add(btn_view, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 110, -1, -1));
+
         getContentPane().add(pnl_fundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 570));
 
         pack();
@@ -635,6 +652,29 @@ public class ProdutoArea extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btn_homeMouseClicked
 
+    private void btn_viewMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_viewMouseClicked
+
+        int linhaSelecionada = tbl_produtos.getSelectedRow();
+        
+        if (linhaSelecionada >= 0) {
+            
+            int codProduto = Integer.parseInt(tbl_produtos.getValueAt(tbl_produtos.getSelectedRow(), 0).toString());
+                       
+            prodBean.setCodProduto(codProduto);
+            
+            ProdutoCRUD tela = new ProdutoCRUD(prodBean, "Produto");
+            tela.preencheCampos(prodBean);
+            tela.show();
+            this.dispose();
+            
+            
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecione um Produto", "Erro!", JOptionPane.WARNING_MESSAGE);
+            
+        }
+
+    }//GEN-LAST:event_btn_viewMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -802,6 +842,7 @@ public class ProdutoArea extends javax.swing.JFrame {
     private javax.swing.JPanel btn_editar;
     private javax.swing.JLabel btn_home;
     private javax.swing.JPanel btn_remover;
+    private javax.swing.JLabel btn_view;
     private javax.swing.JPanel btn_voltar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

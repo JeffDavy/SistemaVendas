@@ -7,7 +7,9 @@ package br.sp.tads.view;
 
 import br.sp.senac.tads.model.Cliente;
 import br.sp.tads.controller.ClienteController;
+import java.awt.Toolkit;
 import java.util.ArrayList;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -25,11 +27,13 @@ public class ClienteCRUDEndereco extends javax.swing.JFrame {
      */
     public ClienteCRUDEndereco() {
         initComponents();
+        setIcon(this);
     }
     
     public ClienteCRUDEndereco(String operacao) {
         initComponents();
         lbl_operacao.setText(operacao);
+        setIcon(this);
         
     }
     
@@ -37,6 +41,13 @@ public class ClienteCRUDEndereco extends javax.swing.JFrame {
         initComponents();
         this.clienteBean = clienteBean;
         lbl_operacao.setText(operacao);
+        setIcon(this);
+        
+        if (operacao.equals("Cliente")) {
+            
+            btn_cancelar.setVisible(false);
+            desabilitarCampos();
+        }
                 
     }
     
@@ -50,6 +61,10 @@ public class ClienteCRUDEndereco extends javax.swing.JFrame {
     /** VOLTAR PARA A COR PADRÃO DO OBJETO AO TIRAR O MOUSE DE CIMA */
     public void resetColor(JPanel panel){    
         panel.setBackground(new java.awt.Color(0, 95, 72));        
+    }
+    
+    public void setIcon(JFrame frm) {
+        frm.setIconImage(Toolkit.getDefaultToolkit().getImage("src/main/resources/imagens/castanha.png"));
     }
     
         /**
@@ -96,15 +111,26 @@ public class ClienteCRUDEndereco extends javax.swing.JFrame {
             Cliente cliBean = (Cliente) obj;
             
             txt_rua.setText(cliBean.getRua());
-            txt_numero.setText(cliBean.getRua());
-            txt_bairro.setText(cliBean.getRua());
-            txt_cidade.setText(cliBean.getRua());
+            txt_numero.setText(cliBean.getNumero());
+            txt_bairro.setText(cliBean.getBairro());
+            txt_cidade.setText(cliBean.getCidade());
             txt_estado.setText(cliBean.getEstado());
-            txt_complemento.setText(cliBean.getRua());
+            txt_complemento.setText(cliBean.getComplemento());
 
            i++;
 
         }
+
+    }
+    
+    public void desabilitarCampos() {
+
+        txt_rua.setEditable(false);
+        txt_numero.setEditable(false);
+        txt_bairro.setEditable(false);
+        txt_cidade.setEditable(false);
+        txt_estado.setEditable(false);
+        txt_complemento.setEditable(false);
 
     }
     
@@ -190,7 +216,7 @@ public class ClienteCRUDEndereco extends javax.swing.JFrame {
 
         lbl_operacao.setFont(new java.awt.Font("Berlin Sans FB", 0, 24)); // NOI18N
         lbl_operacao.setForeground(new java.awt.Color(255, 255, 255));
-        lbl_operacao.setText("Endereço Cliente");
+        lbl_operacao.setText("Operação");
         pnl_superior.add(lbl_operacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 300, -1));
 
         pnl_fundo.add(pnl_superior, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 70));
@@ -409,7 +435,7 @@ public class ClienteCRUDEndereco extends javax.swing.JFrame {
 
                 }
                 
-            } else {
+            } else if (lbl_operacao.getText().equals("Editar Cliente")) {
                 
                 boolean status = clienteControl.editarController(clienteBean);
                 
@@ -431,9 +457,13 @@ public class ClienteCRUDEndereco extends javax.swing.JFrame {
 
                 }
                 
+            } else {
+                
+                ClienteArea home = new ClienteArea();
+                home.show();
+                this.dispose();
+                
             }
-            
-            
             
         }
 

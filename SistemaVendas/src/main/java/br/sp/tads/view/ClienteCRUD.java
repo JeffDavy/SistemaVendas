@@ -7,7 +7,9 @@ package br.sp.tads.view;
 
 import br.sp.senac.tads.model.Cliente;
 import br.sp.tads.controller.ClienteController;
+import java.awt.Toolkit;
 import java.util.ArrayList;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -23,21 +25,30 @@ public class ClienteCRUD extends javax.swing.JFrame {
     
     public ClienteCRUD() {
         initComponents();
+        setIcon(this);
     }
     
     public ClienteCRUD(String operacao) {
         initComponents();
         lbl_operacao.setText(operacao);
+        setIcon(this);
         
     }
     
     public ClienteCRUD(Cliente clienteBean, String operacao) {
         initComponents();
+        setIcon(this);
         
         if (operacao.equals("Editar Cliente")) {
             listaCliente = preencheCampos(clienteBean);
             codCliente = clienteBean.getCodCliente();
             
+        }
+        
+        if (operacao.equals("Cliente")) {
+            
+            btn_cancelar.setVisible(false);
+            desabilitarCampos();
         }
         lbl_operacao.setText(operacao);
         
@@ -55,6 +66,10 @@ public class ClienteCRUD extends javax.swing.JFrame {
      */
     public void resetColor(JPanel panel) {
         panel.setBackground(new java.awt.Color(0, 95, 72));
+    }
+    
+    public void setIcon(JFrame frm) {
+        frm.setIconImage(Toolkit.getDefaultToolkit().getImage("src/main/resources/imagens/castanha.png"));
     }
 
     /**
@@ -139,6 +154,19 @@ public class ClienteCRUD extends javax.swing.JFrame {
         txt_senha.setText(clienteBean.getSenha());
         
     }
+    
+    public void desabilitarCampos() {
+        
+        txt_nomeFantasia.setEditable(false);
+        txt_razao.setEditable(false);
+        txt_cnpj.setEditable(false);
+        txt_email.setEditable(false);
+        txt_contato1.setEditable(false);
+        txt_contato2.setEditable(false);
+        txt_usuario.setEditable(false);
+        txt_senha.setEditable(false);
+        
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -158,7 +186,7 @@ public class ClienteCRUD extends javax.swing.JFrame {
         btn_cancelar = new javax.swing.JPanel();
         lbl_cancelar = new javax.swing.JLabel();
         btn_endereco = new javax.swing.JPanel();
-        lbl_usuarioSessao2 = new javax.swing.JLabel();
+        lbl_endereco = new javax.swing.JLabel();
         txt_nomeFantasia = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel1 = new javax.swing.JLabel();
@@ -268,11 +296,11 @@ public class ClienteCRUD extends javax.swing.JFrame {
         });
         btn_endereco.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lbl_usuarioSessao2.setFont(new java.awt.Font("Berlin Sans FB", 0, 18)); // NOI18N
-        lbl_usuarioSessao2.setForeground(new java.awt.Color(255, 255, 255));
-        lbl_usuarioSessao2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbl_usuarioSessao2.setText("Endereço");
-        btn_endereco.add(lbl_usuarioSessao2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 70, 30));
+        lbl_endereco.setFont(new java.awt.Font("Berlin Sans FB", 0, 18)); // NOI18N
+        lbl_endereco.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_endereco.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl_endereco.setText("Endereço");
+        btn_endereco.add(lbl_endereco, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 70, 30));
 
         pnl_fundo.add(btn_endereco, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 500, 90, 50));
 
@@ -437,7 +465,7 @@ public class ClienteCRUD extends javax.swing.JFrame {
                 tela.show();
                 this.dispose();
                 
-            } else {
+            } else if (lbl_operacao.getText().equals("Editar Cliente")) {
                 
                 Cliente cliente = new Cliente();
                 
@@ -452,6 +480,25 @@ public class ClienteCRUD extends javax.swing.JFrame {
                 cliente.setSenha(txt_senha.getText());
                 
                 ClienteCRUDEndereco tela = new ClienteCRUDEndereco(cliente, "Editar Cliente");
+                tela.preencheCampos(listaCliente);
+                tela.show();
+                this.dispose();
+                
+            } else {
+                
+                Cliente cliente = new Cliente();
+                
+                cliente.setCodCliente(codCliente);
+                cliente.setNomeFantasia(txt_nomeFantasia.getText());
+                cliente.setNome(txt_razao.getText());
+                cliente.setEmail(txt_email.getText());
+                cliente.setCnpj(txt_cnpj.getText());
+                cliente.setContato1(txt_contato1.getText());
+                cliente.setContato2(txt_contato2.getText());
+                cliente.setUsuario(txt_usuario.getText());
+                cliente.setSenha(txt_senha.getText());
+                
+                ClienteCRUDEndereco tela = new ClienteCRUDEndereco(cliente, "Cliente");
                 tela.preencheCampos(listaCliente);
                 tela.show();
                 this.dispose();
@@ -591,10 +638,10 @@ public class ClienteCRUD extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator8;
     private javax.swing.JSeparator jSeparator9;
     private javax.swing.JLabel lbl_cancelar;
+    private javax.swing.JLabel lbl_endereco;
     private javax.swing.JLabel lbl_fechar;
     private javax.swing.JLabel lbl_minimizar;
     private javax.swing.JLabel lbl_operacao;
-    private javax.swing.JLabel lbl_usuarioSessao2;
     private javax.swing.JPanel pnl_botoesEstado;
     private javax.swing.JPanel pnl_fundo;
     private javax.swing.JPanel pnl_lateral;

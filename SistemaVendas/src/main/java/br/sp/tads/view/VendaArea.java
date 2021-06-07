@@ -10,9 +10,11 @@ import br.sp.tads.controller.ItemVendaController;
 import br.sp.tads.controller.ProdutoController;
 import br.sp.tads.controller.VendaController;
 import br.sp.tads.controller.VendedorController;
+import java.awt.Toolkit;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
@@ -42,6 +44,7 @@ public class VendaArea extends javax.swing.JFrame {
     public VendaArea() {
         initComponents();
         vendaBean.setCodCliente(1);
+        setIcon(this);
     }
     
     /** ALTERAR A COR DO OBJETO AO PASSAR O MOUSE*/
@@ -52,6 +55,10 @@ public class VendaArea extends javax.swing.JFrame {
     /** VOLTAR PARA A COR PADRÃO DO OBJETO AO TIRAR O MOUSE DE CIMA */
     public void resetColor(JPanel panel){    
         panel.setBackground(new java.awt.Color(0, 95, 72));        
+    }
+    
+    public void setIcon(JFrame frm) {
+        frm.setIconImage(Toolkit.getDefaultToolkit().getImage("src/main/resources/imagens/castanha.png"));
     }
     
     public void preencheTabela() {

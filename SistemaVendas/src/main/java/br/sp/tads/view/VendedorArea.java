@@ -7,7 +7,9 @@ package br.sp.tads.view;
 
 import br.sp.senac.tads.model.Vendedor;
 import br.sp.tads.controller.VendedorController;
+import java.awt.Toolkit;
 import java.util.ArrayList;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
@@ -26,6 +28,7 @@ public class VendedorArea extends javax.swing.JFrame {
     public VendedorArea() {
         initComponents();
         preencheTabela();
+        setIcon(this);
         
     }
     
@@ -37,6 +40,10 @@ public class VendedorArea extends javax.swing.JFrame {
     /** VOLTAR PARA A COR PADRÃO DO OBJETO AO TIRAR O MOUSE DE CIMA */
     public void resetColor(JPanel panel){    
         panel.setBackground(new java.awt.Color(0, 95, 72));        
+    }
+    
+    public void setIcon(JFrame frm) {
+        frm.setIconImage(Toolkit.getDefaultToolkit().getImage("src/main/resources/imagens/castanha.png"));
     }
     
     public void preencheTabela() {
@@ -60,6 +67,7 @@ public class VendedorArea extends javax.swing.JFrame {
             tbl_vendedores.setModel(tmVendedor);
             
             int i = 0;
+            tmVendedor.isCellEditable(0, 0);
             
             for (Object obj : listaVendedor) {
                 
@@ -99,6 +107,8 @@ public class VendedorArea extends javax.swing.JFrame {
             
             tbl_vendedores.setModel(tmVendedor);
             
+            tmVendedor.isCellEditable(0, 0);
+            
             int i = 0;
             
             for (Object obj : listaVendedor) {
@@ -120,6 +130,8 @@ public class VendedorArea extends javax.swing.JFrame {
         }
         
     }
+    
+
     
    
     /**
@@ -165,6 +177,7 @@ public class VendedorArea extends javax.swing.JFrame {
         lbl_busca = new javax.swing.JLabel();
         txt_busca = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
+        btn_view = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -418,10 +431,7 @@ public class VendedorArea extends javax.swing.JFrame {
         tbl_vendedores.setForeground(new java.awt.Color(40, 40, 40));
         tbl_vendedores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "Código", "Nome", "CPF", "Data de Nascimento", "Contato 1"
@@ -465,6 +475,15 @@ public class VendedorArea extends javax.swing.JFrame {
         jSeparator1.setBackground(new java.awt.Color(40, 40, 40));
         jSeparator1.setForeground(new java.awt.Color(40, 40, 40));
         pnl_fundo.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 140, 350, 10));
+
+        btn_view.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/view-details.png"))); // NOI18N
+        btn_view.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_view.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_viewMouseClicked(evt);
+            }
+        });
+        pnl_fundo.add(btn_view, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 110, -1, -1));
 
         getContentPane().add(pnl_fundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 570));
 
@@ -655,6 +674,31 @@ public class VendedorArea extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btn_homeMouseClicked
 
+    private void btn_viewMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_viewMouseClicked
+
+        Vendedor vendBean = new Vendedor();
+
+        int linhaSelecionada = tbl_vendedores.getSelectedRow();
+
+        if (linhaSelecionada >= 0) {
+
+            int codVendedor = Integer.parseInt(tbl_vendedores.getValueAt(tbl_vendedores.getSelectedRow(), 0).toString());
+
+            vendBean.setCodVendedor(codVendedor);
+
+            VendedorCRUD tela = new VendedorCRUD("Vendedor");
+            tela.preencheCampos(vendBean);
+            tela.show();
+            this.dispose();
+
+        } else {
+            
+            JOptionPane.showMessageDialog(this, "Selecione um vendedor", "Erro!", JOptionPane.WARNING_MESSAGE);
+            
+        }
+
+    }//GEN-LAST:event_btn_viewMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -758,6 +802,7 @@ public class VendedorArea extends javax.swing.JFrame {
     private javax.swing.JPanel btn_editar;
     private javax.swing.JLabel btn_home;
     private javax.swing.JPanel btn_remover;
+    private javax.swing.JLabel btn_view;
     private javax.swing.JPanel btn_voltar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

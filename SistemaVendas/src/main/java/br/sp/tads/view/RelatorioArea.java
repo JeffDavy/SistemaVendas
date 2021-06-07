@@ -2,7 +2,9 @@ package br.sp.tads.view;
 
 import br.sp.senac.tads.model.Relatorio;
 import br.sp.tads.controller.RelatorioController;
+import java.awt.Toolkit;
 import java.util.ArrayList;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
@@ -18,6 +20,7 @@ public class RelatorioArea extends javax.swing.JFrame {
     public RelatorioArea() {
         initComponents();
         preencheTabela();
+        setIcon(this);
     }
     
     RelatorioController relControl = new RelatorioController();
@@ -30,6 +33,10 @@ public class RelatorioArea extends javax.swing.JFrame {
     /** VOLTAR PARA A COR PADRÃO DO OBJETO AO TIRAR O MOUSE DE CIMA */
     public void resetColor(JPanel panel){    
         panel.setBackground(new java.awt.Color(0, 95, 72));        
+    }
+    
+    public void setIcon(JFrame frm) {
+        frm.setIconImage(Toolkit.getDefaultToolkit().getImage("src/main/resources/imagens/castanha.png"));
     }
     
     public void preencheTabela() {

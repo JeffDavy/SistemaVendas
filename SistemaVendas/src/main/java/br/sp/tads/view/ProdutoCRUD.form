@@ -211,7 +211,7 @@
             <Property name="useNullLayout" type="boolean" value="false"/>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JLabel" name="lbl_usuarioSessao2">
+            <Component class="javax.swing.JLabel" name="lbl_concluir">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Berlin Sans FB" size="18" style="0"/>
